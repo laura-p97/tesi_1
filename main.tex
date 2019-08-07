@@ -1,0 +1,95 @@
+\documentclass[a4paper, twoside]{report}
+
+%pacchetti da laboratorio
+\usepackage[utf8]{inputenc} % lettere accentate da tastiera
+\usepackage[italian]{babel} % lingua del documento
+\usepackage{amsmath}        %serve per scrivere un testo negli array
+\usepackage{amssymb}
+\usepackage{booktabs}       %migliora le linee delle tabelle
+\usepackage{fancyhdr}       %permette di modificare l' intestazione della pagina
+\usepackage{float}
+\usepackage{moreverb}
+\usepackage{ifthenx}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{placeins}
+\usepackage{eepic,epic,eepicemu}
+\usepackage{color}
+
+
+%pacchetti da tesi inlgese
+%\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{hyperref}
+\hypersetup{colorlinks=false}
+\usepackage{lscape}
+\usepackage{subfigure}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+
+\title{Studio della produzione del mesone $D^*+$ con metodi multivariati}
+\author{Laura Pintucci}
+% Update supervisor and other title stuff in title/title.tex
+
+\begin{document}
+
+%_________________PAGINA TITOLO_______________________________
+\input{title/title.tex}
+\thispagestyle{empty} 
+
+\cleardoublepage
+
+%\renewcommand{\abstractname}{Acknowledgements}
+%\begin{abstract}
+%It is usual to thank those individuals who have provided %particularly useful assistance, technical or otherwise, during %your project.
+%\end{abstract}
+
+
+%________________PAGINA CITAZIONE_____________________________
+\thispagestyle{empty} 
+\begin{flushright}%{0.65\textwidth}
+\null \vspace {\stretch {1}}
+
+CITAZIONE DA TROVARE
+
+\vspace {\stretch {2}}\null
+\end{flushright}
+
+
+
+
+
+%_________________PAGINA ABSTRACT______________________________
+\begin{abstract}
+SCRIVERE IL SOMMARIO
+\end{abstract}
+
+%________________SOMMARI_______________________________________
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\input{introduzione/introduzione.tex}
+\input{ALICE/ALICE.tex}
+\input{TMVA/TMVA.tex}
+\input{training&testing/training&testing.tex}
+\input{AnalisiDati/AnalisiDati.tex}
+\input{conclusioni/conclusioni.tex}
+\input{appendice/appendice.tex}
+\input{bibliografia/bibliografia.tex}%da cancellare e rifare
+
+
+\bibliographystyle{unsrt}
+\bibliography{bibs/sample}
+\addcontentsline{toc}{chapter}{Bibliography}
+
+
+
+
+\end{document}
+
