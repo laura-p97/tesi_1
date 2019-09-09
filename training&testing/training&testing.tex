@@ -1,78 +1,75 @@
 \chapter{Training e Testing del BDT}
 
-\section{I Dati inziali}
+Nell'analisi svolta in questa tesi si sono considerati i dati suddivisi in intervalli in base al valore dell'impulso trasverso della $D^{*+}$. L'impulso trasverso \`e l'impulso nella direzione perpendicolare ai fasci di protoni incidenti. Gli intervalli considerati sono [1,2],[2,3],[3,4],[4,5],[5,6],[6,8],[8,12],[12,16],[16,24] misurati in $GeV/c$. 
 
-I dati utilizzati per l'analisi svolta sono relativi a collisioni di due fasci di protoni incidenti al Cern. I dati, racccolti nel 2017 da ALICE, sono caratterizzati da un valore di $\sqrt{s} = 5 \ TeV$ \footnote{s è il quadrato della massa invariante della collisione, definita come $s = E^2 - \bar p ^2$} e sono relativi a 985 milioni di collisioni.
-\\Da questi dati si vogliono selezionare solo le $D^{*+}$, che sono state ricostruite dal decadimento $D^{*+} \rightarrow D^0 + \pi^+ $ di cui si è parlato nel \ref{mesoneD}. Per fare ciò, ai dati utilizzati sono già state applicate delle pre-selezioni estremamente morbide che permettono di preservare praticamente tutto il segnale e di fare una prima scrematura dei dati grezzi.
-A questo punto tutta l'analisi che segue è stata svolta considerando i dati suddivisi in vari intervalli. La suddivisione è basata sul valore del $p_T$, che è il valore del momento trasverso, ovvero il momento nella direzione perpendicolare a quella dei fasci di particelle incidenti. Gli intervalli di $p_T$ inizialmente considerati sono: [1,2], [2,3], [3,4], [4,5], [5,6], [6,8], [8,12], [12,16], [16,24] misurati in GeV/c. 
-\\Per poter visualizzare i dati si possono considerare gli istogrammi della massa della $D^{*+}$, nel nostro caso si è scelto di utilizzare gli istogrammi della differenza in massa tra la $D^{*+}$ e la $D^0$ prodotta nel decadimento. Questa differenza in massa non è altro che la massa del $\pi^+$ relativo al primo decadimento, anche detto soft pi, che è il pione con momento più basso (rispetto al $\pi^+$ prodotto nel decadimento della $D^0$) ed è misurata in $Gev/c^2$. %Come mai usiamo gli istogrammi della differenza in massa e non direttamente quelli della massa della Dstar??
-Di seguito si riportano gli istogrammi relativi ad alcuni intervalli di $p_T$, quelli relativi ai restanti intervalli di $p_T$ si trovano in appendice. 
+\section{Training}
 
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=0.7\linewidth]{training&testing/diffDstarD0_2to3.png}
-        \caption{Distribuzione dei dati in funzione della differenza di massa tra la $D^*+$ e la $D^0$ per l'intervallo di $p_T$ [2,3]}
-        \label{fig:grafmassDstar1}
-    \end{figure}
-    
-Come si può vedere dal grafico \ref{fig:grafmassDstar1} non si evidenzia nessun picco evidente, cosa che ci si aspetta nel caso di una risonanza come la $D^{*+}$.\footnote{Una risonanza è una particella che ha un tempo di vita così corto da non essere direttamente osservabile e la cui esistenza si evidenzia considerando i prodotti del suo decadimento. In questo caso c'è un aumento della probabilità di trovare i prodotti del decadimento della risonanza in corrispondenza del valore della massa invariante della risonanza stessa} Questo accade perchè il numero di $D^{*+}$ prodotte è troppo piccolo rispetto al fondo di altre particelle e pertanto il picco della $D^{*+}$ non è riconoscibile rispetto al background.
+In questa sezione si considera la fase di training del BDT, in particolare: le variabili discriminatorie utilizzate dal Boosted Decision Tree, i dati su cui è stato svolto il training e la scelta dei parametri del BDT. 
 
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=0.7\linewidth]{training&testing/diffDstarD0_6to8.png}
-        \caption{Distribuzione dei dati in funzione della differenza di massa tra la $D^*+$ e la $D^0$ per l'intervallo di $p_T$ [6,8]}
-        \label{fig:grafmassDstar2}
-    \end{figure}
-
-
-Diversamente accade nel caso del grafico \ref{fig:grafmassDstar2} in cui si considera un intervallo di $p_T$ con valori del momento trasverso più alti. In questo caso il picco della $D^{*+}$ è già visibile e riconoscibile rispetto al fondo. 
-Questa differenza tra le distribuzioni dei dati si riscontra per tutti gli intervalli di $p_T$ e tanto più è alto il $p_T$ tanto più è evidente il picco. Per ricostruire la $D^{*+}$ si considerano le combinazioni di tracce di due $\pi^+$ e un $K^-$ , ma a basso $p_T$ ci sono più combinazioni possibili mentre ad alto $p_T$ ce ne sono di meno. Pertanto per valori del momento trasverso più bassi le combinazioni errate, ovvero non relative alla $D^{*+}$ sono di più e quindi il fondo stesso è maggiore.
-
-    \subsection{Le variabili di taglio}
-    La selezione di tipo standard che viene svolta ad ALICE per il riconoscimento delle $D^{*+}$ è basata sulla scelta di alcune variabili di taglio e per ognuna di queste si sceglie un valore di \textit{taglio}. Le \textit{variabili di taglio} sono grandezze fisiche che descrivono il decadimento della $D^{*+}$ e che permettono di comprendere se le particelle considerate sono i prodotti di quel decadimento o meno. Il taglio, invece, è il valore scelto per discriminare tra segnale e fondo. 
-    \\Anche per utilizzare il metodo del BDT sono state scelte alcune variabili di taglio, da cui, poi, l'algoritmo del BDT ha ricavato un'unica variabile finale: il textit{classifier output}. Solo per quest'ultima variabile è stato scelto un valore di taglio in base a cui selezionare le candidate $D^{*+}$. 
-    Le variabili di taglio che possono essere considerate sono le seguenti:
-        \begin{itemize}
-            \item \textbf{massa$\bm{D^{*+}}$} è la massa della $D^{*+}$
-            \item \textbf{massa$\bm{D^0}$} è la massa della $D^0$
-            \item \textbf{diff$\bm{D^{*+}D^0}$} è la differenza tra la massa della  $D^{*+}$ e della $D^0$
-            \item \textbf{$\bm{p_TD^{*+}}$} è il momento trasverso della $D^{*+}$
-            \item \textbf{$\bm{{p_T\pi^+}_{soft}}$} è il momento trasverso del $\pi^+$ soft
-            \item \textbf{$\bm{p_T\pi^+}$} è il momento trasverso del $\pi^+$ soft 
-            \item \textbf{$\bm{p_TK^-}$} è il momento trasverso del $K^-$
-            \item \textbf{$\bm{\eta}$} è l'angolo tra la direzione dei fasci di protoni incidenti e la direzione in cui è prodotta la $D^*+$ %Controllare se è giusto!!!
-            \item \textbf{dist$\bm{K^-}$} è la distanza tra la traiettoria del Kaone $K^-$ e il vertice primario (PV) % \footnote{Il vertice primario è il punto in cui decade la $D^*+$}
-            \item \textbf{dist$\bm{\pi^+}$} è la distanza tra la traiettoria del $\pi^+$ (prodotto dal decadimento della $D^0$) e il PV
-            \item \textbf{distdist} è il prodotto dist$\pi^+$ per dist$K^-$
-            \item \textbf{DCA} ovvero Distance of Closest Approach, è la distanza minima tra le traiettore del $K^-$ e del $\pi^+$, in teoria questa distanza dovrebbe essere nulla, in quanto le due traiettorie si dovrebbero incontrare nel vertice secondario (SV) %\footnote{Il vertice secondario è il punto in cui decade la $D^0$}.
-            \item \textbf{cos$\bm{\theta_P}$} è il coseno dell'angolo di pointing. Quest'ultimo è l'angolo tra la retta congiungente il PV e il SV e la direzione del $p_T$ della $D^{*+}$.
-             \item \textbf{cos$\bm{\theta_{P_{XY}}}$} è la proiezione del cos$\theta_P$ sul piano perpendicolare alla direzione dei fasci di protoni
-            \item \textbf{cos$\bm{\theta^*}$} 
-            \item \textbf{cos$\bm{\bar \theta^*}$}
-            \item $\bm{\theta}$ 
-            \item $\bm{L_{DECAD}}$ è la distanza di volo (ovvero la lunghezza di decadimento) della $D^0$ normalizzata per il suo errore 
-             \item $\bm{L_{{DECAD}_{XY}}}$ è la proiezione della $\bm{L_{DECAD}}$ sul piano perpendicolare alla direzione dei fasci di protoni
-        \end{itemize}{}
+\subsection{Variaibili discriminatorie per il training}
+L'analisi svolta in questa tesi \`e basata sullo studio del decadimento $D^{*+} \rightarrow D^0( \rightarrow K^- \pi^+)  \pi^+ $ attraverso l'utilizzo di metodi multivariati, basati sull'analisi congiunta  di pi\`u variabili, definite variabili discriminatorie. In particolare si \`e usato il metodo del boosting decision tree implementato nel TMVA di Root. 
+\\Le variabili discriminatorie considerate sono:
+        \begin{enumerate}
+            \item la differenza della massa invariante tra le candidate $D^{*+}$ e $D^0$, $\Delta M = M (K^-\pi^+\pi^+) - M(K^-\pi^+)$ (diffDstarD0)
+            \item l'impulso delle candidate $D^{*+}$ nella direzione perpendicolare a quella del fascio (PtDstar)
+            \item l'impulso del $\pi^+_{soft}$ (creato dal decadimento della $D^{*+}$) nella direzione perpendicolare a quella del fascio (softPiPt)
+            \item l'impulso del $\pi^+$ (creato dal decadimento della $D^0$) nella direzione perpendicolare a quella del fascio (pTpi)
+            \item l'impulso del $K^-$ nella direzione  perpendicolare a quella del fascio (pTK)
+            \item (Pieta)
+           % \item l'angolo tra la direzione dei fasci di protoni incidenti e la direzione in cui è prodotta la $D^*+$ (eta) %Controllare se è giusto!!!
+            \item la distanza minima tra la traiettoria del Kaone $K^-$ e il vertice primario (PV)\footnote{Il vertice primario è il punto di collisione dei fasci di protoni} (d0K)
+            \item la distanza minima tra la traiettoria del $\pi^+$ (prodotto dal decadimento della $D^0$) e il PV (d0Pi)
+            \item Il prodotto delle distanze minime tra le traiettorie del  $K^-$ e del $\pi^+$ dal PV (d0d0)
+            \item La distanza minima tra le traiettorie del $K^-$ e del $\pi^+$ (DCA) %, in teoria questa distanza dovrebbe essere nulla, in quanto le due traiettorie si dovrebbero incontrare nel vertice secondario (SV) \footnote{Il vertice secondario è il punto in cui decade la $D^0$}.
+            \item Il coseno dell'angolo di pointing, quest'ultimo è l'angolo tra la retta congiungente il PV e il SV e la direzione del $p_T$ della $D^{*+}$ (cosThetaPoint)
+            \item \textbf la proiezione del coseno dell'angolo di pointing sul piano perpendicolare alla direzione dei fasci di protoni (cosThetaPointXY)
+            \item l'angolo di decadimento, ovvero l'angolo tra il vettore impulso delle candidate $D^0$ e il vettore impulso del $\pi^+$ nel sistema di riferimento della $D^0$ (cosThetaStar, cosThetaStarBar che \`e lo stesso angolo considerando le rispettive antiparticelle)
+            \item $\theta$ 
+            \item la lunghezza di decadimento delle candidate $D^0$, ovvero la distanza di volo della $D^0$ normalizzata per il suo errore (NormDecayLenght)
+            \item la proiezione della lunghezza normalizzata di decadimento della $D^0$ sul piano perpendicolare alla direzione del fascio(NormDecayLenghtXY)
+        \end{enumerate}
        
-        
-   Queste sono le variabili di taglio scelte inizialmente per il training del BDT. Dalle \textit{simulazioni Monte Carlo} si può vedere che queste variabili hanno una distribuzione diversa nel caso si consideri il segnale o il fondo. Proprio in base a queste differenze l'algoritmo utilizzato per questa analisi costruisce il BDT fornendo, alla fine del training, il classifier output. Si riportano di seguito i grafici delle distribuzioni di alcune di queste variabili per i dati (ottenuti da ALICE), per la simulazione del segnale e per la simulazione del fondo (ottenuti da simulatore MonteCarlo).
+   Le variabili discriminatorie inizialmente scelte, tra quelle presenti nell'elenco numerato sopra riportato, per il training del BDT sono i numeri: 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15 e 16 .      
+   \\Dai dati della \textit{simulazioni Monte Carlo} si può vedere che queste variabili hanno una distribuzione diversa nel caso si consideri il segnale o il fondo. Proprio in base a queste differenze l'algoritmo utilizzato per questa analisi costruisce il BDT fornendo, alla fine del training, il classifier output. In figura \ref{fig:variabilitaglio} si riportano i grafici delle distribuzioni di alcune di queste variabili per i dati (ottenuti da ALICE), per la simulazione del segnale e per la simulazione del fondo (ottenuti da simulazione MonteCarlo).
    
     \begin{figure}[htbp] %inserire grafici cca 4 variabili di taglio
         \centering
-        \includegraphics[width=0.7\linewidth]{training&testing/variabilitaglio.png}
+     %   \includegraphics[width=0.7\linewidth]{training&testing/variabilitaglio.png}
         \caption{}
         \label{fig:variabilitaglio}
     \end{figure}
+    
+    Tra le variabili discriminatorie sono state introdotte alcune variabili legate all'identificazione delle particelle (PID) tramite la perdita di energia per ionizzazione $\frac{dE}{dx}$ e tramite il tempo di volo dal punto in cui si è formata la particella al rivelatore Time-Of-Flight (TOF) (di cui si è parlato nella sottosezione \ref{TOF}).
+    \\In figura \ref{fig:BBnellaTPC} è riportata la distribuzione della perdita di energia per ionizzazione misurata dal rivelatore TPC (di cui si è parlato al \ref{TPC}) delle particelle create in collisioni protone-protone con energia nel centro di massa $\sqrt{s} = 7 \ TeV$, che è confrontata con l'andamento teorico della Bethe-Bloch per alcune particelle.
+    \\ Le variabili discriminatorie relative alla PID aggiunte sono:
+        \begin{enumerate}[resume]
+            \item la differenza tra la perdita di energia per ionizzazione misurata dalla TPC e la perdita di energia teorica data dalla Bethe-Bloch per il $\pi^+$ prodotto dal decadimento della $D^0$: $n\sigma_{(\pi^+,TPC)}/\sigma_{TPC} = (\frac{dE}{dx}\mid_{m, \pi} \ - \ \frac{dE}{dx}\mid_{th, \pi} ) / \sigma_{TPC} \ $ dove $ \ \sigma_{TPC}$ è la risoluzione della Time-Projection-Chamber (nSigmaTPCpi)
+            \item la differenza tra la perdita di energia per ionizzazione misurata dalla TPC e la perdita di energia teorica data dalla Bethe-Bloch per il $K^-$: $n\sigma_{(K^-,TPC)}/\sigma_{TPC} = (\frac{dE}{dx}\mid_{m,K} \ - \ \frac{dE}{dx}\mid_{th,K} ) / \sigma_{TPC} \ $ (nSigmaTPCK)
+            \item la differenza tra il TOF misurato dal rivelatore Time-Of-Flight e il TOF teorico per il  $\pi^+$ prodotto dal decadimento della $D^0$: $ n\sigma_{(\pi^+,TOF)}/\sigma_{TOF} = (TOF\mid_{m,\pi} \ - \ TOF\mid_{th,\pi}) / \sigma_{TOF} \ $ dove $\sigma_{TOF}$ è la risoluzione del rivelatore TIme-Of-Flight (nSigmaTOFpi)
+            \item la differenza tra il TOF misurato dal rivelatore Time-Of-Flight e il TOF teorico per il  $K^-$: $n\sigma_{(K^-,TOF)}/\sigma_{TOF} = (TOF\mid_{m,K} \ - \ TOF\mid_{th,K}) / \sigma_{TOF} \ $ (nSigmaTOFK)
+        \end{enumerate}
+    
+    %Il set di variabili discriminatorie dei punti elenco numerati sopra riportati su cui si è fatto il training è stato modificato in:  3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20.   
+        
    
+   \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.7\linewidth]{training&testing/Specific-energy-loss-in-the-TPC.png}
+        \caption{ Perdita di energia specifica nella TPC in funzione del momento. Sono riportati anche gli andamenti della Bethe-Bloch per vari tipi di particelle (linee nere continue).}
+        \label{fig:BBnellaTPC}
+    \end{figure}
    
-    Durante la fase iniziale, si è provato il training del BDT utilizzando diversi set di variabili di taglio. In particolare si è considerata la correlazione tra le variabili, che può peggiorare i risultati degli algoritmi di analisi multivariata. Si è quindi scelto di non considerare le variabili fortemente correlate tra loro, dato che, nel caso in analisi, eliminare queste variabili non va a diminuire l'efficienza dell'algoritmo di training. 
-    \\
+  
+  \subsection{Valutazione delle Variabili Discriminatorie}
+  
+    L'utilizzo di variabili discriminatorie correlate tra loro generalmente peggiora le performance dell'algoritmo di machine learning sia per quanto riguarda la capacit\`a di selezionare il segnale dal fondo, sia per i tempi necessari per il training e l'applicazione dell'algoritmo.  
+    \\Si \`e considerata, perci\`o la correlazione lineare tra le variabili discriminaotrie utilizzate. In figura \ref{fig:correlazInizialeS} e \ref{fig:correlazInizialeB} \`e riportata la correlazione in percentuale tra tutte le variabili discriminatorie utilizzate nel primo set per il training (ovvero i numeri: 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15 e 16 dell'elenco sopra riportato) sia per il segnale che per il fondo.
     
     \begin{minipage}{.5\textwidth}%{0.5 cm} 
         \begin{flushleft} \large
         \flushleft
         \includegraphics[width=7.5cm]{training&testing/CorrelationMatrixSin.png}
-        \captionof{figure}{Griglia che mostra la correlazione lineare in percentuale tra le variabili di taglio considerate inizialmente per il training del segnale (da simulazione Monte Carlo)}
+        \captionof{figure}{Correlazione lineare in percentuale tra le variabili discriminatorie considerate inizialmente per il training del segnale (da simulazione Monte Carlo)}
         \label{fig:correlazInizialeS}
         \end{flushleft}
         \end{minipage}
@@ -80,51 +77,24 @@ Questa differenza tra le distribuzioni dei dati si riscontra per tutti gli inter
     \begin{minipage}{0.5\textwidth}
         \begin{flushright} 
         \includegraphics[width=7.5cm]{training&testing/CorrelationMatrixBin.png}
-        \captionof{figure}{Griglia che mostra la correlazione lineare in percentuale tra le variabili di taglio considerate inizialmente per il training del fondo (da simulazione Monte Carlo)}
+        \captionof{figure}{Correlazione lineare in percentuale tra le variabili discriminatorie considerate inizialmente per il training del fondo (da simulazione Monte Carlo)}
         \label{fig:correlazInizialeB}
         \end{flushright}
     \end{minipage}\\[0.5cm]
     
- %   \begin{figure}[htbp] %grafico correlazione lineare tutte variabili
- %       \centering
- %       \includegraphics[width=0.7\linewidth]{training&testing/CorrelationMatrixSin.png}
-%        \caption{Griglia che mostra la correlazione lineare in percentuale tra le variabili di taglio considerate inizialmente per il training per il segnale (da simulazione Monte Carlo)}
-%        \label{fig:correlazInizialeS}
-%    \end{figure}
-    
-    
-%     \begin{figure}[htbp] %grafico correlazione lineare tutte variabili
-%        \centering
-%        \includegraphics[width=0.7\linewidth]{training&testing/CorrelationMatrixBin.png}
-%        \caption{Griglia che mostra la correlazione lineare in percentuale tra le variabili di taglio considerate inizialmente per il training per il fondo (da simulazione Monte Carlo)}
-%        \label{fig:correlazInizialeB}
-%    \end{figure}
-    
-    
-    Inoltre si è deciso di aggiungere anche la \textit{Particle Identification} (PID), che ha permesso di ottenere risultati migliori nella fase di analisi dei dati di ALICE. La PID sfrutta i dati relativi alla perdita di energia delle particelle all'interno del rivelatore: $\frac{dE}{dx}$. Conoscendo la carica della particella e le caratteristiche del materiale di cui è composto il rivelatore, si può utilizzare la \textit{Bethe-Bloch}. Confrontando i dati della perdita di energia con la Bethe-Bloch si può ricavare la massa della particella e quindi identificare la particella stessa. In pratica le limitazioni dovute alle fluttuazioni statistiche e alla precisione dei rivelatori non permettono un'identificazione certa ma di tipo statistico. 
-    \\Allo stesso modo è stato utilizzato anche il \textit{Time Of Flight} (TOF), ovvero la misura del tempo impiegato dalla particella a percorrere una determinata lunghezza nel rivelatore. Conoscendo la lunghezza considerata e il momento della particella si può ricavare la massa della particella stessa. Anche in questo caso le stesse limitazioni della PID impediscono un'identificazione diretta e certa della particella. 
-    
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=0.6\linewidth]{training&testing/Specific-energy-loss-in-the-TPC.png}
-        \caption{ Perdita di energia specifica nella TPC (\ref{TPC}) in funzione del momento, sono riportati anche gli andamenti della Bethe-Bloch per vari tipi di particelle.}
-        \label{fig:BBnellaTPC}
-    \end{figure}
-    
-    Come si vede dalla figura \ref{fig:BBnellaTPC}, i dati non possono sempre essere ricondotti univocamente all'andamento di una singola particella. Nell'analisi relativa a questa tesi si è considerata la differenza tra la $\frac{dE}{dx}\mid_m$ misurata dalla TPC e la $\frac{dE}{dx}\mid_{th}$ calcolata con la Bethe-Bloch, il tutto rinormalizzato per la risoluzione della TPC. 
-    \\Allo stesso modo è stata utilizzata anche la differenza tra il $TOF\mid_{m}$ misurato con il rivelatore TOF e il $TOF\mid_{th}$ calcolato terociamente, tutto rinormalizzato per la risoluzione del rivelatore TOF.
-    
-    Le variabili di taglio aggiunte sono:
+    Dalle figure \ref{fig:correlazInizialeS} e \ref{fig:correlazInizialeB} si vede che per alcune delle variabili discriminatorie utilizzate nel primo set la correlazione \`e alta e in particolare supera il $50 \%$ per le variabili:
     \begin{itemize}
-        \item $\bm{TPC_{PID,\pi^+}}$: $(\frac{dE}{dx}\mid_{m, \pi} \ - \ \frac{dE}{dx}\mid_{th, \pi} ) / \sigma_{TPC} \ $ per il $\pi^+$ prodotto dal decadimento della $D^0$ %nSigmaTPCpi
-        \item $\bm{TPC_{PID,K^-}}$ :  $(\frac{dE}{dx}\mid_{m,K} \ - \ \frac{dE}{dx}\mid_{th,K} ) / \sigma_{TPC} \ $ per il $K^-$ prodotto dal decadimento della $D^0$ %nSigmaTPCK
-        \item $\bm{TOF_{PID,\pi^+}}$ : $ (TOF\mid_{m,\pi} \ - \ TOF\mid_{th,\pi}) / \sigma_{TOF} \ $ per il $\pi^+$ prodotto dal decadimento della $D^0$ %nSigmaTOFpi
-        \item $\bm{TOF_{PID,K^-}}$ : $ (TOF\mid_{m,K} \ - \ TOF\mid_{th,K}) / \sigma_{TOF} \ $ per il $K^-$ prodotto dal decadimento della $D^0$ %nSigmaTOFK
-    \end{itemize}{}
+        \item NormDecayLenght, NormDecayLenghtXY e d0d0 per il segnale
+        \item NormDecayLenght, NormDecayLenghtXY e DCA per il fondo 
+        \item CosThetaPoint e CosThetaPointXY sia per il segnale che per il fondo
+        \item pTpi, pTK, CosThetaStar e CosThetaStarBar sia per il segnale che per il fondo
+    \end{itemize}
     
-    La correlazione tra le variabili di taglio scelte per l'analisi dei dati finale di ALICE è minima per tutte le variabili, ad eccezione delle variabili $L_{{DECAD}_{XY}}$ , distdist, e DCA, come si vede dalle figure \ref{fig:correlazFinaleS} e \ref{fig:correlazFinaleB}
+    Si \`e pertanto deciso di non considerare nell'analisi le variabili: NormDecayLenght, CosThetaPoint, pTpi, pTK e CosThetaStarBar.
+    
+    In figura \ref{fig:correlazFinaleS} e \ref{fig:correlazFinaleB} sono riportate le correlazioni lineari in percentuale per il set modificato di variabili discriminatorie utilizzate per il training, in cui sono state levate le variabili correlate di cui si \`e parlato e sono state aggiunte le variabili relative all'identificazione delle particelle. Il set di variabili \`e composto dai numeri: 3, 7, 8, 9, 10, 12, 13, 14, 16, 17, 18, 19, 20 relativi agli elenchi numerati precedenti.
     \\
-   
+    
       \begin{minipage}{.5\textwidth}%{0.5 cm} 
         \begin{flushleft} \large
         \flushleft
@@ -142,143 +112,215 @@ Questa differenza tra le distribuzioni dei dati si riscontra per tutti gli inter
         \end{flushright}
     \end{minipage} \\[1.cm]
     
-%        \begin{figure}[htbp] %grafico correlazione lineare variabili finali
-%        \centering
-%        \includegraphics[width=0.7\linewidth]{training&testing/CorrelationMatrixS.png}
-%        \caption{Correlazione lineare in percentuale tra le variabili di taglio considerate per il training finale del segnale (da simulazione Monte Carlo)}
-%        \label{fig:correlazFinaleS}
-%    \end{figure}
-    
-%    \begin{figure}[htbp] %grafico correlazione lineare variabili finali
-%        \centering
-%        \includegraphics[width=0.7\linewidth]{training&testing/CorrelationMatrixB.png}
-%        \caption{Correlazione lineare in percentuale tra le variabili di taglio considerate per il training finale del fondo (da simulazione Monte Carlo)}
-%        \label{fig:correlazFinaleB}
-%    \end{figure} 
-    
-    
+ Come si vede dalle figure \ref{fig:correlazFinaleS} e \ref{fig:correlazFinaleB} la correlazione tra le variabili discriminatorie \`e inferiore al $50 \%$ per tutte le variabili discriminatorie considerate ad eccezione di:
+ \begin{itemize}
+     \item NormDecaYLenghtXY e d0d0 per il segnale
+     \item NormDecayLenghtXY e DCA per il fondo
+ \end{itemize}
+   
+  Quest'ultimo set di variabili indicato \`e quello su cui \`e stata svolta l'analisi finale di cui si riporteranno i risultati nel seguito. 
   
-  
-\section{Training}
+%\section{Training}
 
-\subsection{Scelta dei dati per il training}
-Come si è detto in precedenza per il training del BDT si sono utilizzati dati provenienti da \textit{simulazioni Monte Carlo}. Queste permettono, infatti, di simulare la collisione di fasci di protoni e quindi le particelle che vengono create. I dati forniti dal Monte Carlo, però, non sono del tutto aderenti alla realtà fisica prodotta nell'esperimento di LHC, specialmente se si considera il fondo. 
-\\ Inizialmente si sono utilizzati i dati delle simulazioni Monte Carlo ma per cercare di descrivere meglio il fondo si è deciso di considerare per la parte del \textit{segnale} i dati provenienti da simulazione Monte Carlo, mentre per il \textit{fondo} i dati dell'esperimento ALICE. È quindi necessario riuscire a selezionare dagli istogrammi dei dati di ALICE in funzione della diff${D^{*+}D^0}$ ( come il grafico \ref{fig:grafmassDstar1}) solamente il fondo senza prendere anche parte del segnale. Per fare questo si è scelto un valore minimo della variabile diff${D^{*+}D^0}$ e si sono presi solo i dati a destra di tale valore. Per scegliere il valore minimo si sono utilizzati sia il valore della massa del $\pi^+$ (che è la differenza tra la massa della $D^{*+}$ e della $D^0$), sia gli istogrammi dei dati di ALICE per alti intervalli di $p_T$ in cui il picco è più facilmente distinguibile (\ref{fig:grafmassDstar1}), sia i primi risultati ottenuti dall'analisi che era stata già terminata utilizzando solo simulazioni Monte Carlo per il training e in cui era in parte distinguibile il picco del segnale anche per $p_T$ più bassi. Il valore scelto come limite inferiore è di $147.8 \ MeV/c^2$, che evidentemente più alto della massa del $\pi^+$ $139.5 \ MeV/c^2$.
-\\A questo punto non ci sono più dati per il training che descrivono il fondo a sinistra del picco, infatti in questo intervallo della diff${D^{*+}D^0}$ non è possibile individuare i dati di ALICE corrispondenti solo al fondo e non al segnale come fatto prima. L'analisi dei dati di ALICE  ottenuta in questo modo, non distingueva bene il segnale dal fondo nella parte sinistra del picco, evidenziando la difficoltà dell'algoritmo nel selezionare le $D^{*+}$ in assenza di dati per il training in quel particolare intervallo. 
-\\Per risolvere questo problema si è deciso di utilizzare i dati della simulazione Monte Carlo per il fondo a sinistra del picco del segnale. I dati del fondo della simulzione Monte Carlo, pur non descrivendo al meglio i dati reali di ALICE, hanno fornito comunque una base per il training del BDT nella parte a sinistra del picco del segnale ed hanno permesso di ottenere risultati migliori nel riconoscimento delle $D^{*+}$. 
-\\In figura \ref{fig:dati_training} è riportato il grafico dei dati utilizzati per il training per l'intervallo di $p_T$ [3-4]. Si vede in blu il segnale generato con simulazione Monte Carlo, in rosso il fondo a sinistra generato con simulazione Monte Carlo e in verde il fondo a destra preso dai dati di ALICE. Come si nota in \ref{fig:dati_training} i dati del fondo a destra non ci sono per valori alti della diff${D^{*+}D^0}$, questo semplicemente perchè l'analisi per distinguere segnale da fondo è rivelante solo nell'intorno del piccodi segnale, mentre dove mancano i dati per il training siamo già sicuri sia solo fondo. 
 
+
+\subsection{Campione del training}
+Come detto in precedenza per la fase di training del BDT è necessario un insieme di dati di cui sia nota la distinzione tra segnale e fondo. 
+\\Per il segnale è stato utilizzato un campione di simulazione Monte Carlo, essendo questo l'unico modo per essere certi di considerare dati relativi alla $D^{*+}$. Per il fondo si sono considerate due opzioni differenti:
+\begin{itemize}
+    \item dati per il fondo ottenuti da simulazione Monte Carlo ottenuti considerando le combinazioni di due $\pi^+$ e un $K^-$ non relative alla $D^{*+}$
+    \item fondo preso dai dati di ALICE, considerando le candidate $D^{*+}$ a destra e a sinistra del picco di segnale della $D^{*+}$. In particolare si sono presi i dati con valori della differenza tra la massa invariante della $D^{*+}$ e della $D^0$: $\Delta M > 147.8 MeV/c^2$  e $\Delta M < 143.0 MeV/c^2$
+\end{itemize}
+
+Per gli algoritmi di analisi multivariata, come il BDT, è importante che i dati utilizzati per il training siano il più aderente possibile ai dati da analizzare nella fase di applicazione. Pertanto per il fondo si è scelto di utilizzare i dati di ALICE a destra e sinistra del segnale.
+\\In figura \ref{fig:dati_training} è riportata la distribuzione dei dati utilizzati per il training, in cui si vedono i dati da simulazione Monte Carlo per il picco di segnale e i dati di ALICE per il fondo. 
 
     \begin{figure}[htbp] 
         \centering
         \includegraphics[width=0.9\linewidth]{training&testing/diffDstarD0_training_3_4_ok.png}
-        \caption{Dati utilizzati per il training per l'intervallo di $p_T$ [3-4]: in blu il segnale, in rosso il fondo a sinistra ed in verde il fondo a destra }
+        \caption{Dati utilizzati per il training per l'intervallo di $p_T$ [3-4] $GeV/c$, $\Delta M = M(K,\pi,\pi)-M(K,\pi))$ : in rosso il segnale dai dati di simulazione Monte Carlo, in blu il fondo ottenuto dai dati di ALICE}
         \label{fig:dati_training}
     \end{figure}
     
-    
+ Nella tabella \ref{Tab:dati_training} si riporta la quantità di dati per il segnale e per il fondo utilizzati per il training in ogni intervallo di $p_T$. 
+ 
+      \begin{table}[H]
+		\centering
+		\captionof{table}{Dati utilizzati per il training\label{Tab:dati_training}}
+		\begin{tabular}{c|c|c}
+		    \toprule
+		    intervallo $p_T$ [GeV/c]  &   dati training segnale & dati training fondo  \\
+            \midrule
+            1 - 2  	&  10000   &  100000  \\ 
+            2 - 3 	&  30000   &  90000  \\
+            3 - 4  	&  30000   &  30000  \\ 
+            4 - 5  	&  20000   &  10000 \\ 
+            5 - 6  	&  17000   &  4000  \\ 
+            6 - 8  	&  20000   &  2800  \\ 
+            8 - 12  &  12000   &   900 \\   
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+Gli algoritmi di analisi multivariata hanno bisogno di un grande quantità di dati per il training, così da poter apprendere correttamente le informazioni da utilizzare poi nella fase di applicazione. Si nota che per valori di $p_T > 12  \ GeV/c$ si hanno meno di 500 eventi per il fondo e pertanto si è deciso di non considerare gli intervalli di $p_T$ [12-16] e [16-24] GeV/c. Inoltre, per valori di $p_T < 1 \ GeV/c$ si hanno meno di 500 eventi per il training del segnale, perciò in questa tesi non si considera l'intervallo di $p_T$ [0,1] $GeV/c$.
+ 
     
 
 \subsection{Scelta dei Parametri del BDT}
-L'algoritmo del BDT ha al suo interno alcuni parametri che possono essere variati e che possono cambiare le performance dell'algoritmo nel risolvere il problema. Per l'analisi svolta in questa tesi sono stati considerati nello specifico solo due parametri. Il primo è il \textit{numero di alberi} che compongono la "foresta" del BDT. Come spiegato nel paragrafo \ref{BDT}  il training viene fatto su un grande numero di alberi il cui responso viene unito in un'unica variabile finale. Aumentando il numero di alberi l'efficienza dell'algoritmo migliora, finché non si raggiunge un plateau e i risultati dell'analisi non variano all'aumentare del numero di alberi. Dato che un maggiore numero di alberi della foresta significa maggiore tempo impiegato sia per il training che per l'analisi dei dati, si è cercato il numero minimo di alberi che restituisse i risultati migliori ottenibili.
-\\Il numero standard di alberi della foresta è di 850, ma variando questo numero si è trovato che già per 300 alberi i risultati erano gli stessi. Pertanto nell'analisi finale, di cui si riporteranno i risultati nel capitolo seguente, l'algoritmo del BDT ha 300 alberi. 
-\\Il secondo parametro considerato è la \textit{profondità massima} di ogni albero. Con profondità si intende il numero di livelli di un albero. Ad esempio, in figura \ref{fig:depthBDT} l'albero ha 3 livelli, perchè per arrivare dal nodo principale all'ultima foglia si incontrano 3 diverse diramazioni.
-\\
-    \begin{figure}[htbp] 
-        \centering
-        \includegraphics[width=0.7\linewidth]{training&testing/depthBDT.png}
-        \caption{Schema di un albero del BDT con 3 livelli}
-        \label{fig:depthBDT}
-    \end{figure}
-    
-In questo caso si è visto che diminuendo la profondità massima a 2 livelli le performance dell'algoritmo peggiorano, mentre non c'è guadagno nell'aumentarla a 4. Dato che aumentando il numero massimo di livelli aumenta il tempo necessario per il training, l'analisi finale dei dati di ALICE è stata svolta con il parametro della profondità massima uguale a 3.
+Alcuni parametri dell'algoritmo del BDT possono essere variati andando a cambiare le performance dell'algoritmo.
+Per valutare le performance dell'algoritmo del BDT si è utilizzata la \textit{ROC-Curve} (Receiving Operating Characteristics Curve) e in particolare l'area sottesa alla ROC-Curve. La ROC-Curve è il grafico della $background rejection$ in funzione della $signal efficiency$. La $background rejection$ è $1 - background efficiency$, la $background efficiency$ è il numero di eventi del fondo selezionati come fondo e la $signal efficiency$ è il numero di eventi segnale selezionati come segnale. Un algoritmo è tanto più efficiente quanto più è alto il valore dell'area della Roc-Curve.
+\\Per l'analisi svolta in questa tesi sono stati variati due parametri del BDT:
+    \begin{itemize}
+        \item \textit{numero di alberi} che compongono la "foresta" del BDT. Come spiegato nel paragrafo \ref{BDT}  il training viene fatto su un grande numero di alberi il cui responso viene unito in un'unica variabile finale. In generale all'aumentare del numero di alberi l'efficienza dell'algoritmo migliora, ma aumenta anche il tempo necessario sia per il training che per l'applicazione del BDT. Si sono fatti alcuni tentativi per cercare un buon compromesso tra le performance dell'algoritmo e il tempo impiegato per analizzare i dati.  Nella tabella \ref{Tab:trees} si riporta il valore dell'area sottesa alla RoC-Curve per alcuni valori del numero di alberi considerati per il training fatto nell'intervallo di $p_T: \  [3-4] \ GeV/c$.
+       
+        \begin{table}[H]
+		\centering
+		\captionof{table}{Area sottesa alla Roc-Curve per i rispettivi valori del numero di alberi\label{Tab:trees}}
+		\begin{tabular}{c|c}
+		    \toprule
+		    numero di alberi  &  area Roc-Curve  \\
+            \midrule
+              50 &   0.940 \\ 
+           	 200 &   0.944  \\ 
+             300 &   0.945 \\
+             850 &   0.947 \\ 
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	Per l'analisi svolta in questa tesi è stato utilizzato un BDT con 300 alberi.
+	
+	\item \textit{profondità massima} di ciascun albero del BDT. La profondità di un albero è il numero di livelli di cui è composto l'albero, ovvero di diramazioni. Come per il numero di alberi, in generale, se si aumenta la profondità massima migliorano le performance dell'algoritmo, ma aumenta il tempo necessario per l'analisi dei dati.
+	Nella tabella \ref{Tab:profondità} è riportata l'area sottesa alla Roc-Curve per i valori di profondità considerati, per il training fatto con 300 alberi nell'intervallo di $p_T: \ [3,4] \ GeV/c$.
+	
+	\begin{table}[H]
+		\centering
+		\captionof{table}{Area sottesa alla Roc-Curve per i rispettivi valori della profondità degli alberi\label{Tab:profondità}}
+		\begin{tabular}{c|c}
+		    \toprule
+		    profondità  &  area Roc-Curve  \\
+            \midrule
+           	 2 &   0.924  \\ 
+             3 &   0.945 \\
+             4 &   0.947 \\ 
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	Si è scelto di utilizzare alberi con profondità 3 nell'analisi svolta in questa tesi.
+    \end{itemize}
 
-\subsection{I risultati del Training}
+\section{I risultati del Training}
 
-Alla fine del training della foresta di alberi,le caratteristiche di ogni albero, quindi i nodi di cui è composto, le variabili su cui si è discriminato, l'identificazione delle foglie come segnale o fondo, i pesi dei vari rami, vengono salvate in automatico. Questi valori vengono poi utilizzati per l'analisi dei dati di ALICE. 
-\\Per valutare le performance dell'algoritmo del BDT utilizzato si possono considerare alcune grandezze, la prima è la \textit{ROC-Curve} (Receiving Operating Characteristics Curve) e in particolare l'area sottesa alla ROC-Curve. La ROC-Curve è il grafico della background rejection in funzione della signal efficiency. Dove la background rejection è 1 - background efficiency, la background efficiency è il numero di eventi del fondo selezionati come fondo e la signal efficiency è il numero di eventi segnale selezionati come segnale.
-Un algoritmo è tanto più efficiente quanto più è alto il valore dell'area della Roc-Curve. %, il cui  limite teorico è fissato dal Likelihood Ratio.
-Riportiamo in figura \ref{fig:RocCurve} il grafico della ROC-Curve relativa al training del bin di $p_T$ [3-4] con 300 alberi con profondità massima 3. In questo caso l'area sottesa alla curva è ROC-integral = 0.945 . 
+Una volta identificate le variabili discriminatorie scorrelate, la configurazione del BDT e il campione da usare come segnale e fondo si è proceduto con il training. In questa sottosezione si considerano i risultati ottenuti dal training del BDT. 
+\\Come detto in precedenza, per valutare le performance del BDT si considera la Roc-Curve. In figura \ref{fig:RocCurve} è riportata la Roc-Curve relativa la training del BDT con 300 alberi con profondità massima 3 per l'intervallo di $p_T$ [3-4] $GeV/c$. 
+
     \begin{figure}[htbp] 
         \centering
         \includegraphics[width=0.7\linewidth]{training&testing/RocCurve.png}
-        \caption{Grafico della ROC-Curve relativa al training del BDT con 300 alberi e profondità massima 3}
+        \caption{Grafico della ROC-Curve relativa al training del BDT con 300 alberi e profondità massima 3 per l'intervallo di $p_T$ [3,4] $GeV/c$}
         \label{fig:RocCurve}
     \end{figure}
     
-Un'altra grandezza da considerare è la distribuzione dei dati in funzione del classifier output (di cui si è parlato nel \ref{AnalisiMulti}), che in questo caso è chiamato \textit{BDTresponse}. Questo ci fornisce una prima indicazione di quanto sarà possibile separare il segnale dal fondo, infatti, laddove si sovrappongono non sarà possibile separare segnale e fondo quando si utilizzerà questo BDT sui dati di ALICE. Il grafico in figura \ref{fig:BDTresponse} mostra proprio la distribuzione dei dati del testing in funzione del BDTresponse. Si utilizzano i dati del testing (di cui si è parlato nel \ref{BDT}) per fare dei test sulle performance dell'algoritmo. 
+    
+Un'altra grandezza da considerare è la distribuzione dei dati in funzione del classifier output. Le variabili discriminatorie sono combinate tra loro per determinare un'unica variabile, che permette di differenziare il segnale dal fondo, e che nel resto del capitolo sarà chiamato \textit{BDT response}. Il grafico in figura \ref{fig:BDTresponse} mostra la distribuzione del BDT response per il segnale (blu) e per il fondo (rosso). Nella figura si vede che le distribuzioni del segnale e del fondo sono ben distinte e che solo una parte del fondo si sovrappone al segnale. 
 
     \begin{figure}[htbp] 
         \centering
         \includegraphics[width=0.7\linewidth]{training&testing/BDTresponsetest.png}
-        \caption{Distribuzione dei dati del testing rispetto al BDTresponse del training con 300 alberi e profondità massima 3}
+        \caption{Distribuzione del BDT response del training con 300 alberi e profondità massima 3. In blu i dati relativi al segnale e in rosso quelli relativi al fondo}
         \label{fig:BDTresponse}
     \end{figure}
     
 Se confrontiamo la distribuzione dei dati in figura \ref{fig:BDTresponse} e quella rispetto alle variabili di taglio in figura \ref{fig:variabilitaglio}, si nota facilmente quanto la differenza tra la distribuzione del fondo e del segnale sia aumentata considerando il BDTresponse, piuttosto che le grandezze fisiche delle variabili di taglio. Questo è proprio il vantaggio offerto dall'analisi multivariata e nel caso specifico dall'algoritmo del BDT.
-    
-\\Infine è importante anche considerare l'\textit{efficienza del BDT}, che come detto in precedenza è il numero degli eventi segnale che sono stati classificati come segnale dall'algoritmo. Pertanto se l'efficienza è 1 tutti gli eventi segnale sono stati riconosciuti come tali, mentre se è 0 tutti gli eventi segnale sono stati classificati come fondo. Si deve notare, però, che anche nel caso in cui  l'efficienza sia 1 è possibile (anzi probabile) che alcuni eventi fondo siano stati classificati come segnale e perciò la selezione ha comunque dei problemi.
-\\Per questo motivo si considerano anche altre grandezze quali l'efficienza del fondo e la significatività, quest'ultima è definita come 
-
+\\L'\textit{efficienza del segnale} del BDT è il numero di eventi segnale che sono stati classificati dall'algoritmo come segnale, l'\textit{efficienza del fondo} è il numero di eventi del fondo classificati come fondo.
+Si è considerata anche la significatività, che è definita come:
     \begin{equation}
-        s \ = \ \frac{eff_{segnale}}{\sqrt{eff_{segnale} + eff_{fondo}}}
-    \end{equation}{}
-
-Sia l'efficienza del segnale, che l'efficienza del fondo, che la significatività variano in base al valore del taglio applicato al valore del BDTresponse. Il taglio è il valore scelto come limite per dividere il segnale dal fondo, per esempio, considerando il grafico di figura \ref{fig:BDTresponse}, più il valore del taglio è alto più l'efficienza del segnale aumenta ma l'efficienza del fondo diminuisce. Si riporta in figura \ref{fig:effBDT} il grafico di queste grandezze al variare del valore del taglio per il training fatto con 300 alberi e profondità massima 3.
-\\
-
-    \begin{figure}[htbp] 
-        \centering
-        \includegraphics[width=0.7\linewidth]{training&testing/effBDT.png}
-        \caption{Grafico dell'efficienza del segnale in blu, efficienza del fondo in rosso e significatività in verde, al variare del valore del taglio scelto per la BDTresponse. Gli andamenti sono relativi al training con 300 alberi e profondità massima 3}
-        \label{fig:effBDT}
-    \end{figure}
-    
-Attraverso le grandezze di cui si è appena parlato è quindi stato possibile fare delle verifiche sulle performance e sull'utilità dell'algoritmo del BDT per l'analisi dati che si vuole svolgere in questa tesi. In particolare si sono notati due problemi principali utilizzando il BDT. Da un lato per l'intervallo di $p_T$ [1,2], ovvero il più basso considerato in questa analisi, si sono subito riscontrati dei problemi.  In particolare il problema sta nel numero molto basso di eventi segnale nei dati della simulazione Monte Carlo. Ricordiamo, infatti, che a basso $p_T$ ci sono molti più eventi fondo rispetto al segnale, ma per il bin di $p_T$ che stiamo considerando gli eventi segnale appartenenti al dataset della simulazione usata per il training è molto basso, nel caso specifico si hanno appena $117$ eventi segnale (contro i circa $100000$ del fondo). 
-\\A questo punto è fondamentale ricordare che i metodi di analisi basati sul Machine Learning funzionano bene quando si utilizzano grandi quantità di dati, infatti è proprio grazie ai numerosi esempi su cui viene fatto il training che l'algoritmo impara a riconoscere e selezionare le varie tipologie di dati. 
-È quindi evidente il problema di utilizzare per il training solamente $90$ eventi per il segnale. In questo caso si è considerato circa l'$80\%$ dei 117 eventi totali per il training e il restante $20\%$ per il testing. Si riporta il grafico della distribuzione dei dati in funzione del BDTresponse. 
-
- \begin{figure}[htbp] 
-        \centering
-        \includegraphics[width=0.7\linewidth]{training&testing/BDTresponse_0_1.png}
-        \caption{Distribuzione dei dati di training e testing rispetto al BDTresponse del training con 300 alberi e profondità massima 3 per il bin di $p_T$ [0,1]. I rettangoli rappresentano i risultati del testing, i punti con i relativi errori i risultati del training.
-        }
-        \label{fig:BDTresponse_0_1}
-    \end{figure}
-    
-Come si vede dal grafico \ref{fig:BDTresponse_0_1} la distribuzione dei dati del segnale del testing non è uniforme ed è molto sovrapposta a quella del fondo, questo rende difficile individuare un buon valore del taglio della BDTresponse e in generale poco efficace il metodo del BDT per la selezione delle $D^{*+}$. Inoltre si nota anche che le distribuzioni dei dati del training e del testing del segnale differiscono notevolmente fra loro. Come verrà spiegato più avanti nella sezione \ref{testing}, questo è un altro indice che il BDT non sta funzionando correttamente. Per questi motivi si è deciso di non continuare l'analisi per il bin di $p_T$ [0,1] ma solo per $p_T \ > 1 \  Gev/c$. 
-\\Il secondo problema con l'utilizzo del BDT si è riscontrato per i bin di $p_T$ più alto, ovvero [12,16] e [16,24].  Il problema sta nel numero troppo basso di eventi, ovvero la statistica è troppo poca per permettere al BDT di funzionare correttamente, in questo caso specialmente per il fondo. Inoltre, si deve considerare che all'aumentare del $p_T$ il picco di segnale nella distribuzione dei dati di ALICE rispetto alla variabile $diffD^{*+}D^0$ diventa sempre più evidente e più facilmente individuabile anche con un'analisi che non utilizza metodi multivariati. Pertanto non è stata continuata l'analisi dati anche per valori di $p_T \ > \ 12 \ Gev/c$. 
-
-%___________RIVEDERE ALTO PT________________________________-
-%_________________________________________________
-%___________________________________________________
-
-
-
-\subsection{Scelta dei valori di taglio}
-
-L'ultima operazione da compiere per concludere il training del BDT è quella di scegliere i valori di taglio della variabile BDTresponse, che permettono, poi, nella fase di analisi dei dati di ALICE di discriminare tra segnale e fondo. Per scegliere i valori di taglio si è fatto riferimento da una parte ai grafici delle efficienze e della significatività di cui si è parlato precedentemente, dall'altra si sono confrontati i risultati dell'analisi dei dati di ALICE (di cui si parla nel capitolo \ref{Analisi}) e come questi variano in base al taglio. 
-
-Nell'utilizzare i grafici di efficienze e significatività per la scelta del valore di taglio è stato fondamentale aver considerato un rapporto segnale-fondo molto basso (10:1000), questo perchè nei dati di ALICE abbiamo che gli eventi segnale sono molti meno degli eventi fondo. In tal modo anche i risultati del training del BDT e le curve di efficienze e significatività sono più aderenti ai dati di ALICE.
+        sign \ = \ \frac{segnale}{\sqrt{segnale + fondo}}
+    \end{equation}
+Sia l'efficienza del segnale che quella del fondo, che la significatività variano in base al valore di taglio scelto per la variabile BDT response. Il valore di taglio del BDT response è il valore scelto come limite per separare il segnale dal fondo.
+\\In figura \ref{fig:efficienza} sono riportati gli andamenti dell'efficienza del segnale (in verde), del fondo (in blu) e della significatività (in verde) per il training fatto sull'intervallo di $p_T$ [3,4] $GeV/c$.
 
     \begin{figure}[htbp] 
         \centering
-        \includegraphics[width=0.7\linewidth]{training&testing/effBDT/effBDT_rapp_3_4.png}
-        \caption{Grafico dell'efficienza del segnale in blu, efficienza del fondo in rosso e significatività in verde, al variare del valore del taglio scelto per la BDTresponse per il bin di $p_T$ [3,4]. Il rapporto tra segnale e fondo è di 10:1000 . Gli andamenti sono relativi al training con 300 alberi e profondità massima 3
-        }
-        \label{fig:effBDT_10_1000}
+        \includegraphics[width=0.7\linewidth]{training&testing/eff_signok.png}
+        \caption{Efficienza del segnale in verde, del fondo in rosso e significatività in rosso, per il training dell'intervallo di $p_T$ [3,4] $GeV/c$ in funzione del valore del taglio applicato sulla variabile BDT response}
+        \label{fig:efficienza}
     \end{figure}
-    
-Una scelta per il valore di taglio inizialmente presa in considerazione è il punto di massimo della significatività. L'analisi dei dati di ALICE. però, è stata svolta anche per altri valori di taglio del BDTresponse è si è visto che abbassando di poco il valore di taglio la significatività dei dati di ALICE aumentava. In particolare si è scelto il punto in cui la curva dell'efficienza del segnale e quella della significatività si incontrano, cercando così di avere un buon compromesso tra la quantità di segnale selezionata e la significatività. Per i bin di $p_T$ più alti i grafici della significatività diventano sempre meno lineari. probabilmente a causa del diminuire della quantità di dati utilizzata per il training, pertanto in alcuni casi è stato scelto un valore di taglio più alto rispetto a quello del metodo precedentemente indicato. In appendice si riporatno i grafici di efficienze e significatività per tutti gli intervalli di $p_T$ considerati.
-Nella prossima teabella si riportano i valori di taglio della BDTresponse per tutti gli intervalli di $p_T$ su cui è stata svolta l'analisi finale.
 
+
+
+    
+  %Inoltre, si deve considerare che all'aumentare del $p_T$ il picco di segnale nella distribuzione dei dati di ALICE rispetto alla variabile $diffD^{*+}D^0$ diventa sempre più evidente e più facilmente individuabile anche con un'analisi che non utilizza metodi multivariati. Pertanto non è stata continuata l'analisi dati anche per valori di $p_T \ > \ 12 \ Gev/c$. 
+
+
+
+\section{Testing} \label{testing}
+    Una parte dei dati generati dalla simulazione Monte Carlo non sono stati utilizzati per il training e vengono utilizzati per la fase di verifica del training stesso, detta \textit{testing}. 
+    \\In questa fase si vuole controllare che non ci sia stato \textit{overtraining} durante la fase di training, ovvero che il BDT si sia adattato eccessivamente al campione di dati del training e non sia più descrittivo del fenomeno fisico che si vuole considerare nella  sua generalità. e non c'è stato overtraining, ci si aspetta che la distribuzione del BDT response sia la stessa per i dati del training e quelli del testing. 
+    \\In tabella \ref{Tab:test} è riportata la quantità di dati da simulazione Monte Carlo utilizzata per il testing per ogni intervallo di $p_T$ considerato.
+    
     \begin{table}[H]
 		\centering
+		\captionof{table}{Dati utilizzati per il testing\label{Tab:test}}
+		\begin{tabular}{c|c|c}
+		    \toprule
+		    intervallo $p_T$ [GeV/c]  &   dati testing segnale & dati testing fondo  \\
+            \midrule
+            1 - 2  	&  3165   &  37853  \\ 
+            2 - 3 	&  11560   &  26498  \\
+            3 - 4  	&  14395   &  14743  \\ 
+            4 - 5  	&  13292   &  6090 \\ 
+            5 - 6  	&  5868   &  1076  \\ 
+            6 - 8  	&  6301   &  719  \\ 
+            8 - 12  &  5589   &   464 \\   
+			\bottomrule
+		\end{tabular}
+	\end{table}
+    
+    \\In figura \ref{fig:testing_3_4} è riportata la distribuzione del BDT response per i dati del training e del testing per l'intervallo di $p_T$ [3,4] $GeV/c$. Dalla figura si vede che le distribuzione per il training e per il testing coincidono completamente entro gli errori.
+    
+    
+    \begin{figure}[htbp] 
+        \centering
+        \includegraphics[width=0.7\linewidth]{training&testing/overtraining_3_4.png}
+        \caption{Distribuzione del BDT response per il training (punti e relativi errori) e per il testing (rettangoli) per il bin di $p_T$ [3,4] $GeV/c$, in rosso i dati del fondo e in blu quelli relativi al segnale}
+        \label{fig:testing_3_4}
+    \end{figure}
+ 
+    In figura \ref{fig:testing_6_8} si vede la distribuzione del BDT response per i dati del training e del testing per l'intervallo di $p_T$ [6,8] $GeV/c$. Si vede che le distribuzioni per il training e per il testing sono compatibili per la maggior parte dei valori del BDT response. 
+ 
+    \begin{figure}[htbp] 
+        \centering
+        \includegraphics[width=0.7\linewidth]{training&testing/overtraining_6_8.png}
+        \caption{Distribuzione del BDT response per il training (punti e relativi errori) e per il testing (rettangoli) per il bin di $p_T$ [6,8] $GeV/c$, in rosso i dati del fondo e in blu quelli relativi al segnale}
+        \label{fig:testing_6_8}
+    \end{figure}
+ 
+    I grafici \ref{fig:testing_3_4} e \ref{fig:testing_6_8} mostrano che non c'è stato overtraining, pertanto si può procedere con l'analisi dei dati.
+
+
+
+
+\section{Scelta dei valori di taglio}
+
+Ottenute le distribuzioni del BDT response e gli andamenti delle efficienze e della significatività per i vari intervalli di $p_T$ considerati, si sono individuati i valori di taglio del BDT response. In base ai valori di taglio si discriminerà tra segnale e fondo nella fase di applicazione del BDT. 
+\\Per scegliere il valore di taglio della variabile di output del BDT per separare segnale e fondo si sono provate diverse opzioni:
+    \begin{itemize}
+    \item il punto di massimo della significatività
+    \item il punto in cui la curva dell'efficienza del segnale e la curva della significatività si incontrano. Questo è stato fatto per cercare di avere un buon compromesso tra la significatività e la quantità di segnale selezionata. 
+    \end{itemize}
+    
+Per scegliere il valore del taglio migliore si sono considerati i risultati della fase di applicazione del BDT. Si è scelto di utilizzare come valore del taglio il punto di incontro tra la curva dell'efficienza e della significatività.
+\\In tabella \ref{Tab:tagli} si riportano i valori del taglio scelti per ogni intervallo di $p_T$.
+
+\begin{table}[H]
+		\centering
+		\captionof{table}{Valori del taglio del BDT response\label{Tab:tagli}}
 		\begin{tabular}{c|c}
 		    \toprule
-		    bin $p_T$   &   valore del taglio  \\
+		    intervallo di $p_T$ [GeV/c]  &  valore del taglio  \\
             \midrule
-            1 - 2  	&    0.049   \\ 
+           	1 - 2  	&    0.049   \\ 
             2 - 3 	&    0.045  \\ 
             3 - 4  	&    0.031  \\ 
             4 - 5  	&    0.027  \\ 
@@ -289,25 +331,17 @@ Nella prossima teabella si riportano i valori di taglio della BDTresponse per tu
 		\end{tabular}
 	\end{table}
 
- \section{Testing} \label{testing}
- Come si è già detto in precedenza, una parte dei dati generati dalla simulazione Monte Carlo non viene utilizzata per il training, ma è lasciata per la fase di testing. Si vuole controllare, in particolare che non ci sia stato overtraining e perciò ci si aspetta che la distribuzione dei dati al variare del valore della BDTresponse sia la stessa per i dati del training e quelli del tesing. Riportiamo ora alcuni grafici esemplificativi del controllo per l'overtraining per alcuni bin di $p_T$.
- 
- 
-    \begin{minipage}{.5\textwidth}%{0.5 cm} 
-        \begin{flushleft} \large
-        \flushleft
-        \includegraphics[width=7.5cm]{training&testing/overtraining_3_4.png}
-        \captionof{figure}{Distribuzione dei dati del training (con i punti e relativi errori) e del testing (con i rettangoli) al variare della BDTresponse per il bin di $p_T$ [3,4]}
-        \label{fig:testing_3_4}
-        \end{flushleft}
-        \end{minipage}
-    ~
-    \begin{minipage}{0.5\textwidth}
-        \begin{flushright} \large
-        \includegraphics[width=7.5cm]{training&testing/overtraining_6_8.png}
-        \captionof{figure}{Distribuzione dei dati del training (con i punti e relativi errori) e del testing (con i rettangoli) al variare della BDTresponse per il bin di $p_T$ [6,8]}
-        \label{fig:testing_6_8}
-        \end{flushright}
-    \end{minipage} \\[1.cm]
-    
-Come si vede dai grafici \ref{fig:testing_3_4} e \ref{fig:testing_6_8} le distribuzioni dei dati per il training e per il testing coincidono quasi completamente considerando le barre di errore. 
+%Nell'utilizzare i grafici di efficienze e significatività per la scelta del valore di taglio è stato fondamentale aver considerato un rapporto segnale-fondo molto basso (10:1000), questo perchè nei dati di ALICE abbiamo che gli eventi segnale sono molti meno degli eventi fondo. In tal modo anche i risultati del training del BDT e le curve di efficienze e significatività sono più aderenti ai dati di ALICE.
+
+  %  \begin{figure}[htbp] 
+   %     \centering
+  %      \includegraphics[width=0.7\linewidth]{training&testing/effBDT/effBDT_rapp_3_4.png}
+  %      \caption{Grafico dell'efficienza del segnale in blu, efficienza del fondo in rosso e significatività in verde, al variare del valore del taglio scelto per la BDTresponse per il bin di $p_T$ [3,4]. Il rapporto tra segnale e fondo è di 10:1000 . Gli andamenti sono relativi al training con 300 alberi e profondità massima 3
+   %     }
+   %     \label{fig:effBDT_10_1000}
+   % \end{figure}
+  
+  
+  
+  %modificare
+ %Per i bin di $p_T$ più alti i grafici della significatività diventano sempre meno lineari. probabilmente a causa del diminuire della quantità di dati utilizzata per il training, pertanto in alcuni casi è stato scelto un valore di taglio più alto rispetto a quello del metodo precedentemente indicato.
