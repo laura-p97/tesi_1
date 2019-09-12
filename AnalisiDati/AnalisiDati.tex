@@ -3,173 +3,195 @@
 
 \section{I Dati Iniziali}
 
-I dati utilizzati per l'analisi svolta sono relativi a collisioni di due fasci di protoni incidenti al Cern. I dati, racccolti nel 2017 da ALICE, sono caratterizzati da un valore di energia nel centro di massa di 5 \ $TeV$. 
-\\Da questi dati si vogliono selezionare solo le $D^{*+}$, che sono state ricostruite dal decadimento $D^{*+} \rightarrow D^0 + \pi^+ $. Per fare ciò, ai dati utilizzati sono già state applicate delle pre-selezioni estremamente morbide che permettono di preservare tutto il segnale e di fare una prima scrematura dei dati grezzi.
-Gli intervalli di $p_T$ considerati sono: [1,2], [2,3], [3,4], [4,5], [5,6], [6,8], [8,12] misurati in GeV/c. 
-La distribuzione di massa invariante iniziale, cioè prima dell'applicazione del BDT, è visibile in figura \ref{fig:grafmassDstar1} per l'intervallo di $p_T$ [2,3] $GeV/c$.
+I dati che si vogliono analizzare in questa tesi sono relativi a collisioni di due fasci di protoni ad un'energia nel centro di massa di 5 TeV e sono stati raccolti da ALICE nel 2017. 
+\\Dall'insieme delle particelle prodotte nella collisione dei due fasci si vogliono identificare i mesoni $D^{*+}$, ricostruendo il decadimento $D^{*+} \rightarrow D^0(\rightarrow \pi^+ k^-) \pi^+ $. L'estrazione del segnale \`e stata fatta in diversi intervalli di impulso trasverso $p_T$ delle candidate $D^{*+}$: [1,2], [2,3], [3,4], [4,5], [5,6], [6,8], [8,12] misurati in GeV/c. Tutte le possibili combinazioni delle tracce di due $\pi^+$ e un $K^-$ sono state pre-selezionate applicando delle selezioni minime sulle variabili discriminatorie, di cui si \`e gi\`a parlato nella sezione \ref{mesoneD}, che vengono usate per ridurre il fondo combinatoriale.
+La distribuzione di massa invariante iniziale per le candidate $D^{*+}$, cioè prima dell'applicazione del BDT, è visibile in figura \ref{fig:grafmassDstar1} per l'intervallo di $p_T$ [3,4] GeV/c.
 
     \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.7\linewidth]{AnalisiDati/dati_2_3.png}
-        \caption{Distribuzione della differenza di massa invariante tra la $D^{*+}$ e la $D^0$, $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [2,3] $GeV/c$}
+        \includegraphics[width=0.7\linewidth]{AnalisiDati/diffDstarD0_3to4.png}
+        \caption{Distribuzione della differenza di massa invariante tra la $D^{*+}$ e la $D^0$, $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [3,4] GeV/c prima dell'applicazione del BDT.}
         \label{fig:grafmassDstar1}
     \end{figure}
     
-Nel grafico \ref{fig:grafmassDstar1} non si vede nessun picco evidente, cosa che ci si aspetta nel caso di una risonanza come la $D^{*+}$. Questo accade perché il numero di $D^{*+}$ prodotte è troppo piccolo rispetto al fondo combinatoriale delle combinazioni di particelle non relative alla $D^{*+}$ e pertanto il picco della $D^{*+}$ non è riconoscibile rispetto al fondo.
-
+Nel grafico \ref{fig:grafmassDstar1} non si vede nessun picco in corrispondenza di $\Delta M = 0.145$ GeV/$c^2$. Questo accade perché il numero delle candidate $D^{*+}$ ricostruite è molto minore rispetto al fondo combinatoriale.
     \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.7\linewidth]{AnalisiDati/dati_6_8.png}
-        \caption{Distribuzione della differenza di massa invariante tra la $D^{*+}$ e la $D^0$, $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [6,8] GeV/c}
+        \caption{Distribuzione della differenza di massa invariante tra la $D^{*+}$ e la $D^0$, $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [6,8] GeV/c prima dell'applicazione del BDT}
         \label{fig:grafmassDstar2}
     \end{figure}
+Al contrario, considerando un intervallo di $p_T$ pi\`u alto, [6,8] GeV/c si osserva che nella distribuzione di massa inavariante \`e gi\`a visibile il picco delle candidate $D^{*+}$, come riportato in figura \ref{fig:grafmassDstar2}. Infatti, in una collisione protone-protone vengono prodotti pi\`u $\pi^+$ e $K^-$ con basso $p_T$ che con alto $p_T$, determinando un fondo combinatoriale maggiore quando si considerano le candidate $D^{*+}$ a basso $p_T$. Dal confronto tra la figura \ref{fig:grafmassDstar1} e \ref{fig:grafmassDstar2}, \`e subito evidente che l'utilizzo di un'analisi multivariata sia pi\`u utile per candidate a basso $p_T$ che ad alto $p_T$, dove l'utilizzo di poche selezioni sulle variabili topologiche permette comunque l'identificazione del mesone $D^{*+}$.
 
-Nel grafico della distribuzione di massa invariante \ref{fig:grafmassDstar2} in cui si considera l'intervallo di $p_T$ [6,8] GeV/c il picco della $D^{*+}$ è visibile e riconoscibile rispetto al fondo. 
-\\In generale all'aumentare del valore del $p_T$ diventa più evidente il picco di segnale nelle distribuzioni di massa invariante. Questo accade perché nelle collisioni pp vengono prodotti più $\pi^+$ e $K^-$ con basso $p_T$ che con alto $p_T$ e perciò anche il fondo combinatoriale è maggiore a basso $p_T$.
-
-
-\section{Applicazione del BDT}
-Una volta finite le fasi di training e testing si può procedere all'applicazione del BDT sui dati che si vogliono analizzare. La struttura del BDT creata nella fase di training e  controllata nella fase del testing viene ora utilizzata per discriminare i dati tra segnale e fondo. Pertanto il BDT con 300 alberi, profondità massima 3 e con i valori di taglio indicati nella tabella \ref{Tab:tagli} è stato applicato per ogni intervallo di $p_T$ considerato, ottenendo così una selezione dei dati.
-\\In figura \ref{fig:diffDstarD0_3_4_BDT} è riportata la distribuzione in massa invariante delle candidate $D^{*+}$ selezionate con il metodo BDT. Si vede il picco del segnale evidente attorno al valore della $ \Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-) \ \simeq \ 0.145 \ GeV/c$, sovrapposto ad un fondo residuo.
-
+\section{Applicazione del BDT} \label{applicazione}
+Dopo aver proceduto al training e al test del BDT, l'algoritmo \`e stato applicato ai dati per separare segnale e fondo.
+\\In figura \ref{fig:diffDstarD0_3_4_BDT} è riportata la distribuzione in massa invariante delle candidate $D^{*+}$ selezionate con il metodo BDT. Si vede il picco del segnale evidente attorno al valore della $ \Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-) \ \simeq \ 0.145$ GeV/c, sovrapposto ad un fondo combinatoriale residuo.
 
  \begin{figure}[htbp] 
         \centering
         \includegraphics[width=0.7\linewidth]{AnalisiDati/diffDstarD0_3_4BDT.png}
-        \caption{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [3,4] GeV/c}
+        \caption{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [3,4] GeV/c dopo l'applicazione del BDT}
         \label{fig:diffDstarD0_3_4_BDT}
     \end{figure}
-    
-Per determinare il numero di candidate $D^{*+}$ selezionate si è proceduto con il fit della distribuzione di massa invariante. 
-\\Per l'intervallo di $p_T$ [1-2] $GeV/c$ i dati della distribuzione di massa invariante delle candidate $D^{*+}$ selezionate con il metodo BDT non mostra un picco di segnale. Per questo motivo si è deciso di non procedere con il fit della distribuzione per questo intervallo di $p_T$ e perciò i risultati seguenti vengono mostrati solo per $p_T > 2 \ GeV/c$.
-\\Per gli intervalli di $p-T$ considerati il picco del segnale é stato descritto da una funzione Gaussiana, mentre il fondo é stato descritto dalla somma di due funzioni:
+ 
+Per l'intervallo di $p_T$ [1-2] GeV/c i dati della distribuzione di massa invariante delle candidate $D^{*+}$ selezionate con il metodo BDT non permettono di individuare il picco di segnale nella distribuzione di massa invariante. Per questo motivo non \`e stato possibile procedere con l'analisi per $p_T < 1$ GeV/c e perciò i risultati seguenti vengono mostrati solo per $p_T > 2$ GeV/c.   
 
+Per determinare il numero di candidate $D^{*+}$ selezionate si è proceduto con un fit della distribuzione di massa invariante. 
+Il picco del segnale é descritto da una funzione Gaussiana nell'intervallo [0.144,0.147], che corrisponde a circa 3~$\sigma$.
+Per il fondo \`e stata considerata inizialmente una funzione a soglia $f_1$, tradizionalmente usata nell'analisi standard di ALICE per descrivere il fondo combinatoriale, che ha come limite inferiore la massa del $\pi^+$:
+\begin{equation}
+        f_1  = \ a \sqrt{x-0.13957} e^{- (x - 0.13957) }
+    \end{equation}
+dove la massa del $\pi^+$ vale $m_{\pi^+} = 0.13957$ GeV/$c^2$, $a$ \`e un parametro libero e la variabile $x$ corrisponde a $\Delta M$. L'intervallo considerato per la funzione $f_1$ [0.1395,0.155] \`e limitato a sinistra dal valore di soglia della massa del $\pi^+$. 
+    
+Per descrivere meglio il fondo nell'intervallo [0.1435,0.150] \`e stata aggiunta una funzione polinomiale di secondo grado:     
     \begin{equation}
-        fondo_1  = \ d \sqrt{x-0.13957} e^{- (x - 0.13857) }
+        f_2 = \ b x^2 + c x + d
     \end{equation}
-     \begin{equation}
-        fondo_2 = \ a x^2 + b x + c
-    \end{equation}
-    
-Dove $a, \ b, \ c, e d$ sono dei parametri liberi utilizzati per il fit del fondo.
-\\La $Gaussiana$ ha come range [0.144,0.147] , la funzione $fondo_1$ [0.1395,0.155] e $fondo_2$  [0.1435,0.150]. Le due funzioni per il fondo vengono prima sommate e poi la nuova funzione $fondo$ = $fondo_1$ + $fondo_2$ viene fatto il fit nell'intervallo [0.1395,0.1545]. Infine si sommano le funzione $fondo$ e $Gaussiana$ ottenendo la funzione chiamata $totale$, da cui il fit finale mostrato in figura \ref{fig:fit_3_4}.
+dove $b, \ c$ e $d$ sono dei parametri liberi e $x$ corrisponde a $\Delta M$. Quindi il fit del fondo combinatoriale \`e stato fatto utilizzando la funzione $f = f_1 + f_2$.
 
-    \begin{figure}[htbp] 
+In figura \ref{fig:fit_3_4_p} si mostra il fit della funzione Gaussiana, della funzione $f$ per il fondo e la somma delle due (funzione $totale$) per l'intervallo di $p_T$ [3,4] GeV/c.
+    \begin{figure}[htpb] 
         \centering
-        \includegraphics[width=0.9\linewidth]{AnalisiDati/pt_3_4_pol2.png}
-        \caption{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [3,4] GeV/c e funzione di fit $totale$ in blu}
-        \label{fig:fit_3_4}
-    \end{figure}
-    
-Si nota che all'aumentare del $p_T$ il fondo diminuisce sempre di più e tende ad appiattirsi, rendendo così il fit più semplice.
-Si riportano di seguito i grafici per i vari bin di $p_T$ considerati. 
-\\
-
-\begin{minipage}{.5\textwidth}%{0.5 cm} 
-        \begin{flushleft} \large
-        \flushleft
-        \includegraphics[width=8cm]{AnalisiDati/pt_2_3_pol2.png}
-        \captionof{figure}{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [2,3] GeV/c e funzione di fit $totale$ in blu}
-        \label{fig:fit_2_3}
-        \end{flushleft}
-        \end{minipage}
-    ~
-    \begin{minipage}{0.5\textwidth}
-        \begin{flushright} \large
-        \includegraphics[width=8cm]{AnalisiDati/pt_3_4_pol2.png}
-        \captionof{figure}{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [3,4] GeV/c e funzione di fit $totale$ in blu}
+        \includegraphics[width=0.8\linewidth]{AnalisiDati/fit_3_4.png}
+        \caption{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [3,4] GeV/c. Sono riportate in rosso la funzione di fit Gaussiana, in verde la funzione di fit $f$ e in blu la somma delle due funzioni. }
         \label{fig:fit_3_4_p}
-        \end{flushright}
-    \end{minipage} \\[1.cm]
-    
-    
-    \begin{minipage}{.5\textwidth}%{0.5 cm} 
-        \begin{flushleft} \large
-        \flushleft
-        \includegraphics[width=8cm]{AnalisiDati/pt_4_5_pol2.png}
-        \captionof{figure}{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [4,5] GeV/c e funzione di fit $totale$ in blu}
-        \label{fig:fit_4_5}
-        \end{flushleft}
-        \end{minipage}
-    ~
-    \begin{minipage}{0.5\textwidth}
-        \begin{flushright} \large
-        \includegraphics[width=8cm]{AnalisiDati/pt_5_6_pol2.png}
-        \captionof{figure}{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [5,6] GeV/c e funzione di fit $totale$ in blu}
-        \label{fig:fit_5_6}
-        \end{flushright}
-    \end{minipage} \\[1.cm]
+    \end{figure}
 
-\begin{minipage}{.5\textwidth}%{0.5 cm} 
-        \begin{flushleft} \large
-        \flushleft
-        \includegraphics[width=8cm]{AnalisiDati/pt_6_8_pol2.png}
-        \captionof{figure}{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [6,8] GeV/c e funzione di fit $totale$ in blu}
-        \label{fig:fit_6_8}
-        \end{flushleft}
-        \end{minipage}
-    ~
-    \begin{minipage}{0.5\textwidth}
-        \begin{flushright} \large
-        \includegraphics[width=8cm]{AnalisiDati/pt_8_12_pol2.png}
-        \captionof{figure}{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [8,12] GeV/c e funzione di fit $totale$ in blu}
-        \label{fig:fit_8_12}
-        \end{flushright}
-    \end{minipage} \\[1.cm]
-    
+Calcolando il $\chi^2$ e il numero di gradi di libert\`a ($NDL$) del fit della funzione $totale$ si \`e potuto valutare che per tutti gli intervalli di $p_T$ considerati vale $\frac{\chi^2}{NDL} < 2$. Inoltre, i risultati del fit mostrano che il picco di segnale \`e centrato nel valore $0.1455$ GeV/c, compatibile con il valore atteso. 
+
+Nei grafici in figura \ref{fig:fit} si riportano le distribuzione di massa invariante $\Delta M$ dei dati sperimentali dopo l'applicazione del BDT con i relativi fit della funzione $totale$ per tutti gli intervalli di $p_T$ considerati.
 
 
-\section{Valutazione delle performance}
+\begin{figure}[h]      \centering
+       \includegraphics[width=0.48\textwidth]{AnalisiDati/pt_2_3_pol2.png}
+        \includegraphics[width=0.48\textwidth]{AnalisiDati/pt_3_4_pol2.png}
+        \includegraphics[width=0.48\textwidth]{AnalisiDati/pt_4_5_pol2.png}
+        \includegraphics[width=0.48\textwidth]{AnalisiDati/pt_5_6_pol2.png}\\
+        \includegraphics[width=0.48\textwidth]{AnalisiDati/pt_6_8_pol2.png}
+        \includegraphics[width=0.48\textwidth]{AnalisiDati/pt_8_12_pol2.png}\\
+       \caption{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per gli intervalli di $p_T$ considerati nell'analisi e funzioni di fit $totale$ in blu.}
+       \label{fig:fit}
+   \end{figure}
 
-Per valutare le performance dell'analisi svolta si sono calcolate alcune grandezze quali la quantità di segnale selezionata, la quantità di fondo selezionata, la significatività e il rapporto segnale su fondo. Per poter avere queste grandezze in ogni intervallo di $p_T$ si è calcolato l'integrale della funzione di fit $totale$ entro 3 $\sigma$ a destra e a sinistra del valore medio della Gaussiana. Sia il valore medio della Gaussiana che il valore della $\sigma$ sono stati presi dal fit della Gaussiana sul picco del segnale. Poi si è trovata la quantità di fondo calcolando l'integrale della funzione $fondo$ nello stesso intervallo. Infine, per trovare la quantità di segnale, si è sottratto all'integrale della funzione $totale$ l'integrale del fondo. 
-\\In figura \ref{fig:segnale} si riporta la quantità di segnale per i vari intervalli di $p_T$ con l'errore associato. Dalla figura si vede che l'efficienza del segnale diminuisce all'aumentare del $p_T$.
+
+\section{Risultati ottenuti}
+
+Per determinare il numero di $D^{*+}$ ricostruite e selezionate con il metodo multivariato \`e stato calcolato l'integrale della funzione $totale$  in un intervallo definito come $\mu \pm 3 \sigma$ dove $\mu$  \`e il valore medio e $\sigma$ la deviazione standard della funzione Gaussiana. Il fondo residuo \`e stato stimato calcolando l'integrale della funzione $f$ nello stesso intervallo. Infine, per trovare la quantità di segnale, si è sottratto all'integrale della funzione $totale$ l'integrale del fondo. 
+\\In figura \ref{fig:segnale} si riporta la quantità di segnale estratto dal fit delle distribuzioni di massa invariante in funzione del $p_T$ con l'errore statistico associato.
 
     \begin{figure}[htbp] 
         \centering
-        \includegraphics[width=0.9\linewidth]{AnalisiDati/segnale.png}
-        \caption{Grafico della quantità di segnale in funzione del $p_T$}
+        \includegraphics[width=0.8\linewidth]{AnalisiDati/segnale.png}
+        \caption{Segnale estratto dal fit delle distribuzioni di massa invariante in funzione del $p_T$. La barra d'errore rappresenta l'errore statistico.}
         \label{fig:segnale}
     \end{figure}
 
-In figura \ref{fig:fondo} è mostrata la quantità di fondo per gli intervalli di $p_T$ considerati. Si vede che l'efficienza del segnale diminuisce velocemente all'aumentare del $p_T$.
 
-    \begin{figure}[htbp] 
+In figura \ref{fig:fondo} è mostrata la quantità di fondo in funzione del $p_T$.
+
+    \begin{figure}[h] 
         \centering
-        \includegraphics[width=0.9\linewidth]{AnalisiDati/fondo.png}
-        \caption{Grafico della quantità di fondo in funzione del $p_T$}
+        \includegraphics[width=0.8\linewidth]{AnalisiDati/fondo.png}
+        \caption{Grafico della quantità di fondo in funzione del $p_T$, la barra d'errore rappresenta l'errore statistico.}
         \label{fig:fondo}
     \end{figure}
-    
-Si è calcolata anche la significatività, utilizzando la formula 
+ 
+\clearpage
+%\newpage
+Si è calcolata anche la significanza, utilizzando la formula 
  
  \begin{equation}
-     sign = \frac{s}{\sqrt{s+f}}
+     significanza = \frac{S}{\sqrt{S+F}}
  \end{equation}
 
-dove $s$ è la quantità di segnale, mentre $f$ è la quantità di fondo. Anche in questo caso l'operazione è stata ripetuta per tutti gli intervalli di $p_T$ e con la propagazione degli errori si è ricavato l'errore relativo.
+dove $S$ è la quantità di segnale, mentre $F$ è la quantità di fondo. Anche in questo caso l'operazione è stata ripetuta per tutti gli intervalli di $p_T$ e con la propagazione degli errori si è ricavato l'errore statistico. Il grafico in figura \ref{fig:significatività} mostra il valore della significanza per gli intervalli di $p_T$ considerati. Si vede che si ha il massimo della significanza per l'intervallo di $p_T$ [3,4] GeV/c e il minimo per l'intervallo di $p_T$ [8,12] GeV/c.
 
-    \begin{figure}[htbp] 
+    \begin{figure}[h] 
         \centering
-        \includegraphics[width=0.9\linewidth]{AnalisiDati/significance.png}
-        \caption{Grafico della significatività in funzione del $p_T$}
+        \includegraphics[width=0.8\linewidth]{AnalisiDati/significance_BDT.png}
+        \caption{Significanza in funzione del $p_T$, la barra d'errore rappresenta l'errore statistico.}
         \label{fig:significatività}
     \end{figure}
 
-Il grafico in figura \ref{fig:significatività} mostra il valore della significatività per gli intervalli di $p_T$ considerati. Si vede che si ha il massimo della significatività per l'intervallo di $p_T$ [3,4] GeV/c e il minimo per l'intervallo di $p_T$ [8,12] GeV/c.
-\\Si è creato anche il grafico del rapporto tra segnale e fondo al variare del bin di $p_T$ riportato in figura \ref{fig:s_b}. 
+
+La figura \ref{fig:s_b} riporta il grafico del rapporto tra segnale e fondo al variare del $p_T$. Si vede che il rapporto segnale su fondo aumenta al crescere del $p_T$, questo perché, come spiegato in precedenza, al crescere del $p_T$ il fondo combinatoriale diminuisce.
 
     \begin{figure}[htbp] 
         \centering
-        \includegraphics[width=0.9\linewidth]{AnalisiDati/s_b.png}
-        \caption{Grafico del rapporto segnale su fondo in funzione del $p_T$}
+        \includegraphics[width=0.8\linewidth]{AnalisiDati/s_b.png}
+        \caption{Rapporto segnale su fondo in funzione del $p_T$, la barra d'errore rappresenta l'errore statistico.}
         \label{fig:s_b}
     \end{figure}
     
-Infine, in figura \ref{fig:confr_sign}, si confrontano i valori della significatività ottenuti con l'analisi del BDT e quelli ottenuti con l'analisi standard si ALICE. Si vede che per gli intervalli di $p_T < 4 \ GeV/c$ la significatività ottenuta con l'analisi del BDT è più alta di quella ottenuta con l'analisi standard di ALICE, mentre per $p_T > 4 \ GeV/c$ accade il contrario. 
+Infine, l'efficienza di selezione dell'algorimo \`e stata calcolata applicando l'algoritmo stesso ad un campione di solo segnale ottenuto da un Monte Carlo simile a quello usato per il training e calcolando il rapporto tra le candidate $D^{*+}$ selezionate come segnale dal BDT e la quantit\`a di segnale del campione.
+In figura \ref{fig:efficienza_BDT} \`e mostrata l'efficienza dell'algoritmo utilizzato in questa tesi in funzione del $p_T$.
+%come si calcola l'errore su un'efficienza?
 
 \begin{figure}[htbp] 
         \centering
-        \includegraphics[width=0.9\linewidth]{AnalisiDati/confr_sign.png}
-        \caption{Grafico della significatività in funzione del $p_T$, in blu l'analisi standard di ALICE, in rosso l'analisi con il BDT}
+        \includegraphics[width=0.8\linewidth]{AnalisiDati/eff_BDT.png}
+        \caption{Efficienza dell'algoritmo di BDT in funzione del $p_T$.}
+        \label{fig:efficienza_BDT}
+    \end{figure}
+    
+\newpage
+\subsection{Confronto con l'analisi standard di ALICE}    
+
+I risultati ottenuti in questa tesi, selezionando le candidate $D^{*+}$ con un metodo di analisi multivariata sono stati confrontati con quelli ottenuti dall'analisi basata su selezioni topologiche\cite{dati_ALICE}.
+In figura \ref{fig:confr_sign}, sono riportati i valori della significanza ottenuti con l'analisi eseguita con il BDT e quelli ottenuti con l'analisi standard di ALICE. Per gli intervalli di $p_T < 4$ GeV/c la significanza ottenuta con l'analisi eseguita con il BDT è più alta di quella ottenuta con l'analisi standard di ALICE di circa il $25\%$. Per l'intervallo di $p_T$ [4-5] le significanze ottenute con le due analisi sono compatibili, mentre per valori del  $p_T > 5$ GeV/c la significanza ottenuta dall'analisi standard di ALICE \`e maggiore di quella ottenuta con il BDT di pi\`u del $20\%$. 
+
+    \begin{figure}[htbp] 
+        \centering
+        \includegraphics[width=0.8\linewidth]{AnalisiDati/significance.png}
+        \caption{Significanza in funzione del $p_T$, in rosso per l'analisi standard di ALICE, in blu per l'analisi eseguita con il BDT presentata in questa tesi.}
         \label{fig:confr_sign}
     \end{figure}
+  
+L'efficienza del BDT \`e stata moltiplicata per l'accettanza geometrica del rivelatore così che potesse essere confrontata con quella dell'analisi standard di ALICE. %L'accettanza tiene conto sia della quantit\`a di particelle che possono essere rivelate dal rivelatore che delle pre-selezioni applicate sul campione di dati analizzato. 
+In figura \ref{fig:eff_acc} \`e riportato il prodotto dell'efficienza del BDT per l'accettanza per i due metodi di analisi considerati. Dal grafico si vede che per valori di $p_T < 5$ GeV/c il valore dell'efficienza moltiplicato per l'accettanza del BDT \`e pi\`u alto di almeno l'$80\%$ rispetto a quello dell'analisi standard di ALICE, mentre per $p_T > 5$ GeV/c il valore dell'efficienza per l'accettanza dell'analisi standard di ALICE \`e maggior di quello del BDT al massimo del $30\%$.
+
+
+    \begin{figure}[h] 
+        \centering
+        \includegraphics[width=0.8\linewidth]{AnalisiDati/eff_accett.png}
+        \caption{Efficienza moltiplicata per l'accettanza in funzione del $p_T$, in blu per l'algoritmo del BDT e in rosso per l'analisi standard di ALICE.}
+        \label{fig:eff_acc}
+    \end{figure}
+
+ 
+%sezione d'utro da modificare 
+\iffalse
+
+Infine è stata calcolata la sezione d'urto  della produzione del mesone $D^{*+}$  utilizzando la seguente formula:
+
+    \begin{equation}
+        \frac{d\sigma_{D^{*+}}}{dp_T} = \frac{1}{\Delta p_T} \frac{1}{BR} \frac{\frac{1}{2} N^{raw}(p_T) f_{prompt}(p_T)}{(\epsilon \times acc)(p_T) L_{int}}
+    \end{equation}
+    
+dove $N^{raw}$ è il segnale della $D^{*+}$ estratto con il fit della distribuzione di massa invariante. ; $f_{prompt}$ è la frazione di $D^{*+}$ primarie prodotte nell'interazione protone-protone e non provenienti dal decadimento di altre particelle più pesanti che sono ,invece, secondarie (le candidate $D^{*+}$ selezionate contengono una misura delle due componenti); $\epsilon$ è l'efficienza dell'algoritmo moltiplicata per l'efficienza di ricostruzione (di cui è riportato il grafico in figura \ref{fig:efficienza_BDT}); $acc$ è l'accettanza geometrica del rivalatore; $BR$ è il branching ratio del canale di decadimento considerato in questa tesi $D^{*+} \rightarrow \pi^+ D^0(\rightarrow \pi^+ K^-)$ e vale $BR = 0.67 * 0.038 = 0.263 $. Il fattore $\frac{1}{2}$ tiene conto del fatto che vengono selezionate sia le particelle sia le antiparticelle, mentre si vuole considerare la sezione d'urto della sola particella.  
+\\In figura \ref{fig:sezioneUrto} si mostra il grafico della sezione d'urto di produzione del mesone $D^{*+}$ in collisioni protone-protone ad un energia del centro di massa di 5 TeV ottenuto dall'analisi multivariata paragonato alla sezione d'urto ottenuta dell'analisi standard di ALICE. Si vede che i valori della sezione d'urto sono compatibili per valori $p_T > 4$ GeV/c mentre per $p_T < 4$ GeV/c la sezione d'
+ 
+ 
+ \begin{figure}[htbp] 
+        \centering
+        \includegraphics[width=0.8\linewidth]{AnalisiDati/sezioneUrto.png}
+        \caption{Sezione d'urto del mesone $D^{*+}$ in funzione del $p_T$, in blu per l'analisi eseguita con il BDT e in rosso per l'analisi standard di ALICE.}
+        \label{fig:sezioneUrto}
+    \end{figure}
+   
+    
+%modificare
+    
+%\\Dai grafici di confronto riportati in questa sezione si nota che l'analisi del BDT fornisce risultati migliori rispetto all'analisi standard di ALICE per valori bassi di $p_T$ ($p_T$ < 5 GeV/c), mentre all'aumentare del $p_T$ l'analisi standard di ALICE fornisce risultati migliori. Questo pu\`o essere spiegato principalmente considerando due fattori:
+    \begin{itemize}
+        \item il fatto che i campioni di dati utilizzati per la fase di training del BDT sia per il segnale che per il fondo hanno una quantit\'a di dati maggiore negli intervalli con $p_T$ pi\`u basso considerati e che questa quantit\`a di dati diminuisce all'aumentare del $p_T$. Gli algoritmi di analisi multivariata come il BDT funzionano al meglio nel risolvere problemi con grandi quantit\`a di dati, mentre incontrano difficolt\`a se il campione di dati analizzato \`e piccolo. Questo spiega perch\`e l'algoritmo di BDT restituisce risultati migliori per valori di $p_T < 5$ GeV/c;
+        \item il fatto che all'aumentare del $p_T$ il fondo combinatoriale nelle distribuzioni di massa invariante diminuisce. Questo rende il picco del segnale delle candidate $D^{*+}$ pi\`u riconoscibile e quindi anche pi\`u facile da selezionare manualmente attraverso le variabili discriminatorie come viene fatto nell'analisi standard di ALICE. 
+    \end{itemize}
+ 
+\fi 
+    
+Per migliorare i risultati ottenuti con l'algoritmo di BDT per valori di $p_T > 5$ GeV/c, si potrebbe provare ad utilizzare un campione di dati pi\`u grande rispetto a quello utilizzato in questa tesi, cos\`i che l'algoritmo di BDT possa apprendere meglio nella fase di training come distinguere il segnale dal fondo. 
+\\Inoltre per gli intervalli di $p_T > 5$ GeV/c si potrebbe provare ad utilizzare dei valori di taglio pi\`u bassi rispetto a quelli utilizzati in questa tesi cos\`i da preservare una maggiore quantit\`a di segnale.
+    
+

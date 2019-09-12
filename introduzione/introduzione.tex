@@ -1,15 +1,18 @@
-\chapter{Introduzione}
+\chapter*{Introduzione}
+\addcontentsline{toc}{chapter}{Introduzione}  
+L'obbiettivo di questa tesi è quello di studiare la produzione di un mesone contenente un quark charm, il mesone $D^{*+}$,  in collisioni protone-protone, utilizzando i dati raccolti dall'esperimento ALICE (A Large Ion Collider Experiment) ad LHC (Large Hadron Collider) del Cern. Lo studio del mesone $D^{*+}$ viene ricostruito attraverso il decadimento $D^{*+} \rightarrow D^0 \pi^+$. Per l'analisi si utilizzeranno i dati relativi a 985~milioni di collisioni protone-protone ad un'energia nel centro di massa di 5~TeV.
 
-L'obbiettivo di questa tesi è quello di studiare la produzione del mesone $D^{*+}$ in collisioni protone protone generate ad LHC (Large Hadrons Collider), utilizzando i dati dell'esperimento ALICE (A Large Ion Collider Experiment). Lo studio della produzione del mesone $D^{*+}$ in questa tesi verrà condotto con metodi di analisi multivariata e in particolare utilizzando un Boosted Decision Tree (BDT). I dati che si utilizzeranno per l'analisi sono stati raccolti da ALICE nel 2017, sono caratterizzati da un'energia nel centro di massa di 5 $TeV$ e sono relativi a 985 milioni di collisioni. Alla fine del lavoro di questa tesi si vogliono confrontare i risultati ottenuti con il Boosted Decision Tree con quelli dell'analisi standard svolta ad ALICE.
-\\Lo studio di mesoni con charm come il mesone $D^{*+}$, prodotti da collisioni di ioni pesanti ad ALICE, è importante per ottenere informazioni sul Quark Gluon Plasma (QGP). Questo è uno stato della materia che si formerebbe circa un picosecondo dopo la collisione tra i fasci di ioni, secondo la teoria della Cromo-Dinamica Quantistica (QCD).
-In questa tesi si sono studiati i mesoni $D^{*+}$ prodotti da collisione di fasci di protoni, da cui non si forma il QGP. Questi dati vengono confrontati con quelli relativi a mesoni con charm prodotti da collisioni di ioni pesanti e che quindi hanno interagito con il QGP.
-\\In questa tesi si vogliono selezionare le tracce relative al mesone $<D^{*+}$ tra tutte le tracce raccolte da ALICE. Questo è un tipico problema di selezione, in cui si cerca un segnale raro in un insieme di dati composto principalmente da eventi di fondo. L'utilizzo di algoritmi di machine learning come il BDT può essere utile per risolvere problemi di selezione. Per l'analisi dati svolta nel seguente lavoro di tesi si utilizza il TMVA (Tool for MultiVariate Analysis), uno strumento di Root, il quale permette di utilizzare algoritmi di analisi multivariata, tra cui il BDT. L'utilizzo del Boosted Decision Tree prevede due fasi principali. La prima è la fase di training, che viene svolta per far apprendere all'algoritmo le caratteristiche dei dati del segnale utilizzando dati di cui si conosce già la separazione tra segnale e fondo. In questa tesi si utilizzeranno per la fase di training dati ottenuti da simulazione Monte Carlo. La seconda fase è l'applicazione, in cui il BDT analizza i dati e li separa tra segnale e fondo, in base a quanto ha appreso durante la fase di training.
-\\L'obbiettivo ultimo di questa tesi è calcolare quanti mesoni $D^{*+}$ sono stati selezionati con l'analisi del BDT e confrontare questi valori con quelli relativi all'analisi standard di ALICE. In questo modo si potrà valutare l'utilità di algoritmi di analisi multivariata per l'analisi dati di problemi di selezione ad ALICE.
-\\Il contenuto del lavoro di questa tesi è strutturato come segue:
+Lo studio della produzione del mesone $D^{*+}$ presentato in questa tesi verrà condotto con un nuovo metodo di analisi multivariata e in particolare utilizzando un algoritmo chiamato Boosted Decision Tree (BDT). Per l'analisi in questa tesi si utilizza il TMVA \cite{TMVA} (Tool for MultiVariate Analysis), incluso nel framework di Root \cite{Root}. 
+
+I risultati ottenuti verranno confrontati con i risultati pubblicati da ALICE ottenuti con un metodo di identificazione del mesone $D^{*+}$  basato su selezioni applicate alle variabili cinematiche e topologiche del decadimento \cite{dati_ALICE}. 
+L'identificazione del mesone $D^{*+}$ è un tipico problema di selezione, in cui si cerca un segnale raro in un campione composto principalmente da eventi di fondo. L'utilizzo di algoritmi di apprendimento artificiale (machine learning) come il BDT può essere utile per risolvere problemi di selezione. Sar\`a quindi interessante valutare l'utilità di algoritmi di analisi multivariata per l'analisi dati di problemi di selezione di questo tipo ad ALICE.
+
+La tesi \`e strutturata nel modo seguente:
     \begin{itemize}
-        \item CAPITOLO 2: breve introduzione sull'esperimento ALICE e i suoi rivelatori, da cui sono stati raccolti i dati che verranno utilizzati in questa tesi;
-        \item CAPITOLO 3: breve introduzione sulla fisica particellare e sul mesone $D^{*+}$ studiato in questa tesi;
-        \item CAPITOLO 4: breve introduzione agli algoritmi di analisi multivariati e al funzionamento del Boosted Decision Tree;
-        \item CAPITOLO 5: descrizione della fase di training del BDT e dei risultati ottenuti;
-        \item CAPITOLO 6: descrizione dell'applicazione del BDT sui dati di ALICE e valutazione dell'analisi svolta.
+        \item CAPITOLO 1: introduzione all'esperimento ALICE e ai principali rivelatori usati per l'identificazione del mesone $D^{*+}$;
+        \item CAPITOLO 2: motivazioni per lo studio del mesone $D^{*+}$ in collisioni protone-protone;
+        \item CAPITOLO 3: introduzione agli algoritmi di analisi multivariata e al funzionamento dell'algoritmo Boosted Decision Tree;
+        \item CAPITOLO 4: descrizione della fase di training dell'algoritmo Boosted Decision Tree;
+        \item CAPITOLO 5: descrizione dell'applicazione del Boosted Decision Tree ai dati di ALICE;
+        \item CAPITOLO 6: conclusioni.
     \end{itemize}
