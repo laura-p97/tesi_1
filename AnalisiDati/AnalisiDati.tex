@@ -21,6 +21,7 @@ Nel grafico \ref{fig:grafmassDstar1} non si vede nessun picco in corrispondenza 
         \caption{Distribuzione della differenza di massa invariante tra la $D^{*+}$ e la $D^0$, $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [6,8] GeV/c prima dell'applicazione del BDT}
         \label{fig:grafmassDstar2}
     \end{figure}
+
 Al contrario, considerando un intervallo di $p_T$ pi\`u alto, [6,8] GeV/c si osserva che nella distribuzione di massa inavariante \`e gi\`a visibile il picco delle candidate $D^{*+}$, come riportato in figura \ref{fig:grafmassDstar2}. Infatti, in una collisione protone-protone vengono prodotti pi\`u $\pi^+$ e $K^-$ con basso $p_T$ che con alto $p_T$, determinando un fondo combinatoriale maggiore quando si considerano le candidate $D^{*+}$ a basso $p_T$. Dal confronto tra la figura \ref{fig:grafmassDstar1} e \ref{fig:grafmassDstar2}, \`e subito evidente che l'utilizzo di un'analisi multivariata sia pi\`u utile per candidate a basso $p_T$ che ad alto $p_T$, dove l'utilizzo di poche selezioni sulle variabili topologiche permette comunque l'identificazione del mesone $D^{*+}$.
 
 \section{Applicazione del BDT} \label{applicazione}
@@ -34,7 +35,7 @@ Dopo aver proceduto al training e al test del BDT, l'algoritmo \`e stato applica
         \label{fig:diffDstarD0_3_4_BDT}
     \end{figure}
  
-Per l'intervallo di $p_T$ [1-2] GeV/c i dati della distribuzione di massa invariante delle candidate $D^{*+}$ selezionate con il metodo BDT non permettono di individuare il picco di segnale nella distribuzione di massa invariante. Per questo motivo non \`e stato possibile procedere con l'analisi per $p_T < 1$ GeV/c e perciò i risultati seguenti vengono mostrati solo per $p_T > 2$ GeV/c.   
+Per l'intervallo di $p_T$ [1-2] GeV/c i dati della distribuzione di massa invariante delle candidate $D^{*+}$ selezionate con il metodo BDT non permettono di individuare il picco di segnale nella distribuzione di massa invariante. Per questo motivo non \`e stato possibile procedere con l'analisi per $p_T < 2$ GeV/c e perciò i risultati seguenti vengono mostrati solo per $p_T > 2$ GeV/c.   
 
 Per determinare il numero di candidate $D^{*+}$ selezionate si è proceduto con un fit della distribuzione di massa invariante. 
 Il picco del segnale é descritto da una funzione Gaussiana nell'intervallo [0.144,0.147], che corrisponde a circa 3~$\sigma$.
@@ -54,13 +55,13 @@ In figura \ref{fig:fit_3_4_p} si mostra il fit della funzione Gaussiana, della f
     \begin{figure}[htpb] 
         \centering
         \includegraphics[width=0.8\linewidth]{AnalisiDati/fit_3_4.png}
-        \caption{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [3,4] GeV/c. Sono riportate in rosso la funzione di fit Gaussiana, in verde la funzione di fit $f$ e in blu la somma delle due funzioni. }
+        \caption{Distribuzione di massa invariante $\Delta M = M(\pi^+,\pi^+,K^-) - M(\pi^+,K^-)$, per l'intervallo di $p_T$ [3,4] GeV/c. Sono riportate in rosso la funzione di fit Gaussiana, in verde la funzione di fit $f$ e in blu la somma delle due funzioni (funzione $totale$). }
         \label{fig:fit_3_4_p}
     \end{figure}
 
 Calcolando il $\chi^2$ e il numero di gradi di libert\`a ($NDL$) del fit della funzione $totale$ si \`e potuto valutare che per tutti gli intervalli di $p_T$ considerati vale $\frac{\chi^2}{NDL} < 2$. Inoltre, i risultati del fit mostrano che il picco di segnale \`e centrato nel valore $0.1455$ GeV/c, compatibile con il valore atteso. 
 
-Nei grafici in figura \ref{fig:fit} si riportano le distribuzione di massa invariante $\Delta M$ dei dati sperimentali dopo l'applicazione del BDT con i relativi fit della funzione $totale$ per tutti gli intervalli di $p_T$ considerati.
+Nei grafici in figura \ref{fig:fit} si riportano le distribuzione di massa invariante $\Delta M$ dei dati sperimentali dopo l'applicazione del BDT con i relativi fit della funzione $totale$ per gli intervalli di $p_T$ considerati: [2,3],[3,4],[4,5],[5,6],[6,8] e [8,12].
 
 
 \begin{figure}[h]      \centering
@@ -161,7 +162,7 @@ In figura \ref{fig:eff_acc} \`e riportato il prodotto dell'efficienza del BDT pe
 
  
 %sezione d'utro da modificare 
-\iffalse
+
 
 Infine è stata calcolata la sezione d'urto  della produzione del mesone $D^{*+}$  utilizzando la seguente formula:
 
@@ -169,9 +170,11 @@ Infine è stata calcolata la sezione d'urto  della produzione del mesone $D^{*+}
         \frac{d\sigma_{D^{*+}}}{dp_T} = \frac{1}{\Delta p_T} \frac{1}{BR} \frac{\frac{1}{2} N^{raw}(p_T) f_{prompt}(p_T)}{(\epsilon \times acc)(p_T) L_{int}}
     \end{equation}
     
-dove $N^{raw}$ è il segnale della $D^{*+}$ estratto con il fit della distribuzione di massa invariante. ; $f_{prompt}$ è la frazione di $D^{*+}$ primarie prodotte nell'interazione protone-protone e non provenienti dal decadimento di altre particelle più pesanti che sono ,invece, secondarie (le candidate $D^{*+}$ selezionate contengono una misura delle due componenti); $\epsilon$ è l'efficienza dell'algoritmo moltiplicata per l'efficienza di ricostruzione (di cui è riportato il grafico in figura \ref{fig:efficienza_BDT}); $acc$ è l'accettanza geometrica del rivalatore; $BR$ è il branching ratio del canale di decadimento considerato in questa tesi $D^{*+} \rightarrow \pi^+ D^0(\rightarrow \pi^+ K^-)$ e vale $BR = 0.67 * 0.038 = 0.263 $. Il fattore $\frac{1}{2}$ tiene conto del fatto che vengono selezionate sia le particelle sia le antiparticelle, mentre si vuole considerare la sezione d'urto della sola particella.  
-\\In figura \ref{fig:sezioneUrto} si mostra il grafico della sezione d'urto di produzione del mesone $D^{*+}$ in collisioni protone-protone ad un energia del centro di massa di 5 TeV ottenuto dall'analisi multivariata paragonato alla sezione d'urto ottenuta dell'analisi standard di ALICE. Si vede che i valori della sezione d'urto sono compatibili per valori $p_T > 4$ GeV/c mentre per $p_T < 4$ GeV/c la sezione d'
- 
+dove $N^{raw}$ è il segnale della $D^{*+}$ estratto con il fit della distribuzione di massa invariante; $f_{prompt}$ è la frazione di $D^{*+}$ primarie prodotte nell'interazione protone-protone e non provenienti dal decadimento di altre particelle più pesanti, che sono dette secondarie (le candidate $D^{*+}$ selezionate contengono una misura delle due componenti); $\epsilon$ è l'efficienza dell'algoritmo (di cui \`e riportato il grafico in figura \ref{fig:efficienza_BDT}) moltiplicata per l'efficienza di ricostruzione; $acc$ è l'accettanza geometrica del rivelatore; $BR$ è il branching ratio del canale di decadimento considerato in questa tesi ($D^{*+} \rightarrow \pi^+ D^0(\rightarrow \pi^+ K^-)$) e vale $BR = 0.67 * 0.038 = 0.263 $. Il fattore $\frac{1}{2}$ tiene conto del fatto che vengono selezionate sia le particelle sia le antiparticelle, mentre si vuole considerare la sezione d'urto della sola particella.  
+\\In figura \ref{fig:sezioneUrto} si mostra il grafico della sezione d'urto di produzione del mesone $D^{*+}$ in collisioni protone-protone ad un energia del centro di massa di 5 TeV ottenuto dall'analisi multivariata paragonato alla sezione d'urto ottenuta dall'analisi standard di ALICE. Le sezioni d'urto ottenute con i due metodi non sono compatibili considerando soltanto gli errori statistici e differiscono al massimo del 20\% con la differenza massima nell'intervallo []2,3] GeV/c. 
+La differenza osservata potrebbe essere legata all'estrazione del segnale tramite la procedura di fit, ad una non completa rimozione del fondo nell'intervallo di $\Delta$M sotto il picco del segnale, oppure all'approssimazione nel calcolo della sezione d'urto in cui il termine $f_{prompt}$ \`e stato considerato uguale nei due casi. 
+
+Se prendessimo in considerazione gli errori sistematici legati alla procedura di estrazione del segnale, al calcolo dell'efficienza di selezione del segnale e all'efficienza di tracciamento e di identificazione delle particelle, che non sono stati calcolati nell'ambito di questa tesi, le due sezioni d'urto risulterebbero compatibili entro gli errori sistematici \cite{dati_ALICE}).
  
  \begin{figure}[htbp] 
         \centering
@@ -180,16 +183,6 @@ dove $N^{raw}$ è il segnale della $D^{*+}$ estratto con il fit della distribuzi
         \label{fig:sezioneUrto}
     \end{figure}
    
-    
-%modificare
-    
-%\\Dai grafici di confronto riportati in questa sezione si nota che l'analisi del BDT fornisce risultati migliori rispetto all'analisi standard di ALICE per valori bassi di $p_T$ ($p_T$ < 5 GeV/c), mentre all'aumentare del $p_T$ l'analisi standard di ALICE fornisce risultati migliori. Questo pu\`o essere spiegato principalmente considerando due fattori:
-    \begin{itemize}
-        \item il fatto che i campioni di dati utilizzati per la fase di training del BDT sia per il segnale che per il fondo hanno una quantit\'a di dati maggiore negli intervalli con $p_T$ pi\`u basso considerati e che questa quantit\`a di dati diminuisce all'aumentare del $p_T$. Gli algoritmi di analisi multivariata come il BDT funzionano al meglio nel risolvere problemi con grandi quantit\`a di dati, mentre incontrano difficolt\`a se il campione di dati analizzato \`e piccolo. Questo spiega perch\`e l'algoritmo di BDT restituisce risultati migliori per valori di $p_T < 5$ GeV/c;
-        \item il fatto che all'aumentare del $p_T$ il fondo combinatoriale nelle distribuzioni di massa invariante diminuisce. Questo rende il picco del segnale delle candidate $D^{*+}$ pi\`u riconoscibile e quindi anche pi\`u facile da selezionare manualmente attraverso le variabili discriminatorie come viene fatto nell'analisi standard di ALICE. 
-    \end{itemize}
- 
-\fi 
     
 Per migliorare i risultati ottenuti con l'algoritmo di BDT per valori di $p_T > 5$ GeV/c, si potrebbe provare ad utilizzare un campione di dati pi\`u grande rispetto a quello utilizzato in questa tesi, cos\`i che l'algoritmo di BDT possa apprendere meglio nella fase di training come distinguere il segnale dal fondo. 
 \\Inoltre per gli intervalli di $p_T > 5$ GeV/c si potrebbe provare ad utilizzare dei valori di taglio pi\`u bassi rispetto a quelli utilizzati in questa tesi cos\`i da preservare una maggiore quantit\`a di segnale.
